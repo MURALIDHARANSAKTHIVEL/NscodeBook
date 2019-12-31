@@ -1,0 +1,16 @@
+
+<div id="pagewrapper">
+    <app-header (togglesildebar)="toggle($event)"></app-header>
+    <div id="sidebar-container">
+        <div id="sidebar-content" [class.toggle]="showslide">
+            <app-sidenav></app-sidenav>
+        </div>
+        <div id="main-content" [class.toggle]="showslide">
+            <router-outlet></router-outlet>
+        </div>
+
+    </div>
+
+
+
+</div>
