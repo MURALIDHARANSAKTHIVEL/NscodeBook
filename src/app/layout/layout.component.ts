@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-layout',
@@ -11,6 +12,8 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  check = new FormControl()
   showslide:boolean;
   toggle(event:boolean)
   {

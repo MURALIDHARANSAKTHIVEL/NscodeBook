@@ -1,25 +1,41 @@
-div#sidebar {
+@sidebar-color :#eeeeeD;
+@sidebar-bg-color:#616161;
+
+#sidebar {
     width: 200px;
    
-    color: #eeeeeD;background-color: #616161;
-    
+    color: @sidebar-color;
+    background-color:@sidebar-bg-color ;
+    min-height: 100%;
 }
-#navigation-menu {
+.navigation-menu {
  
     text-align: center;
     display: block;
 }
 
-#navigation-menu li.nav-item {
+.navigation-menu li.nav-item {
     padding: 15px 0px;
+    cursor: pointer;
 }
 
-div#user-profile {
+#user-profile {
     padding: 15px 0px;
     text-align: center;
 }
 
 
-div#user-details {
+#user-details {
     line-height: normal;
 }
+
+.navigation-menu li.nav-item:hover,.navigation-menu li.nav-item.active
+{
+color: @sidebar-bg-color;
+background-color: @sidebar-color;
+}
+.navigation-menu > li.nav-item > a{
+    
+    cursor: pointer;
+}
+

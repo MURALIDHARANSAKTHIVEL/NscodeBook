@@ -1,40 +1,48 @@
-#pagewrapper
-{
-width: 100%;
-height: 100%;
-overflow: hidden;
-
+@header-bg-color:  #ea6967;
+@color:#eeeeeD;
+@sidebar-bg-color:#616161;
+#pagewrapper{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    
+ 
 }
-#sidebar-container
-{
-   position: relative;
-   top:0;
-   width: 100%;
-}
-#sidebar-content
-{
-
-position: absolute;
-top: 0em;
-left: 0em;
-right: 0em;
-   transition: all 0.3s;
+#header.fixed-top{
+    padding: 10px 0;
+    background-color: @header-bg-color;
+    color:@color ;
    
 }
-#main-content
-{
+.sidebar-content {
+    position: absolute;
+    height: 100%;
+    transition: all 2s;
+  
+}
+
+.sidebar-container {
+    position: relative;
+    max-width: 100%;
+    top: 63px;
+    min-height: calc(100% - 63px);
+}
+
+.main-content {
     padding-left: 200px;
-    margin-top: 65px;
     transition: all 0.2s;
 }
-#main-content.toggle
+
+
+.sidebar-content.toggle
+{
+
+    width: 0px;
+    overflow: hidden;
+}
+
+.sidebar-content.toggle~.main-content
 {
     padding-left: 0px;
 }
-#sidebar-content.toggle
-{
 
-width: 0px;
-overflow: hidden;
-   
-}

@@ -6,6 +6,7 @@ import { MatIconModule, MatButtonModule } from '@angular/material';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HeaderComponent } from './header/header.component';
 import { UserinfolistComponent } from './sidenav/userinfolist/userinfolist.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,7 +21,9 @@ const material=[
   imports: [
     CommonModule,
     LayoutRoutingModule,
-    material
+    material,
+    FormsModule,
+    ReactiveFormsModule
 
   ]
 })

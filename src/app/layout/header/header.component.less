@@ -1,18 +1,30 @@
-.header
-{
-    background-color:#ea6967 ;
-    color: #eeeeeD;
-    
-}
+
 .header-title
 {
+    position:absolute;
     width: 200px;
-    transition: all 0.1s;
+    max-width: 200px;
 }
 
-.header-title.show
-{
-width: 0px;
-overflow: hidden;
+.nav{
 
+    padding-left: 200px;
+  
+}
+
+.header-title.show{
+
+    width: 0px;
+    overflow: hidden;
+}
+
+.header-title.show~.nav
+{
+    transition: all 0.1s;
+    padding-left: 0px;
+}
+.mat-icon
+{
+
+    cursor: pointer;
 }

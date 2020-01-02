@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="row  justify-content-center">
+
+        <h4>ADD QUESTION</h4>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
+            <select class="form-control">
+                <option>TemplateType</option>
+                <option>Template1</option>
+                <option>Template2</option>
+
+            </select>
+
+
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
+            <select class="form-control">
+                <option>Category Type</option>
+                <option>Java</option>
+                <option>c</option>
+                <option>c++</option>
+                <option>Angular</option>
+                <option>Database</option>
+                <option>c</option>
+                <option>c++</option>
+                <option>Angular</option>
+            </select>
+        </div>
+    </div>
+    <div class="row question-block">
+        <div class=" col-sm-12 col-md-12 col-lg-12 ">
+            <quill-editor [placeholder]="placeholder" [styles]="editorstyle"></quill-editor>
+        </div>
+
+
+    </div>
+
+    <div class="row answer-block justify-content-center">
+        <div class="col-3">
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-success" type="button">A</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-success" type="button">B</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-success" type="button">C</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-success" type="button">D</button>
+                </div>
+                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>

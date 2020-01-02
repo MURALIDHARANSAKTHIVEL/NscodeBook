@@ -7,7 +7,8 @@ import { LoginComponent } from '../login/login.component';
 const routes: Routes = [
   {path:'',component:LayoutComponent,
 children:[
-{path:'',loadChildren:()=>import('../test/test.module').then(m=>m.TestModule)}
+{path:'',loadChildren:()=>import('../test/test.module').then(m=>m.TestModule)},
+{path:'',loadChildren:()=>import('../question/question.module').then(m=>m.QuestionModule)}
 
 ]
 }
