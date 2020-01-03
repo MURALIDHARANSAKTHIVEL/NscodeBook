@@ -6,17 +6,14 @@
     <div class="row">
 
         <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
-            <select class="form-control">
-                <option>TemplateType</option>
-                <option>Template1</option>
-                <option>Template2</option>
-
+            <select class="form-control" [formControl]="TemplateType">
+                <option value="1">Template1</option>
+                <option value="2">Template2</option>
             </select>
-
 
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
-            <select class="form-control">
+            <select class="form-control" (change)="onChangeTemplateType($event.target.value)">
                 <option>Category Type</option>
                 <option>Java</option>
                 <option>c</option>
@@ -38,32 +35,37 @@
     </div>
 
     <div class="row answer-block justify-content-center">
-        <div class="col-3">
+        <div class="col-3 button-block"
+            [ngClass]="{'firsttemplate':isFirsttemplate==true,'secondtemplate':isSecondTemplate==true}">
 
-            <div class="input-group">
+            <div *ngFor=" let option of Options,let i = index" class="input-group" [ngClass]="{active: !i}">
                 <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button">A</button>
+                    <button class="btn btn-success" type="button" (click)="i=!i" (click)="Templatecontrol($event)"
+                        value="{{option}}">{{option}}</button>
                 </div>
                 <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
             </div>
-            <div class="input-group">
+
+            <!-- <div class="input-group" [ngClass]="{active:button2.value==active}">
                 <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button">B</button>
+                    <button class="btn btn-success" type="button" #button2 (click)="Templatecontrol($event)"
+                        value="2">B</button>
                 </div>
                 <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
             </div>
-            <div class="input-group">
+            <div class="input-group" [ngClass]="{active:active==button3.value}">
                 <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button">C</button>
+                    <button class="btn btn-success" type="button" #button3 (click)="Templatecontrol($event)"
+                        value="3">C</button>
                 </div>
                 <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
             </div>
-            <div class="input-group">
+            <div class="input-group" [ngClass]="{active:active==button4.value}">
                 <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button">D</button>
+                    <button class="btn btn-success" type="button" value="4"  #button4  (click)="Templatecontrol($event)">D</button>
                 </div>
                 <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-            </div>
+            </div> -->
 
 
         </div>
