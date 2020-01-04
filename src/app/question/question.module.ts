@@ -5,6 +5,7 @@ import { QuestionRoutingModule } from './question-routing.module';
 import { QuestionComponent } from './question/question.component';
 import{QuillModule} from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import{TooltipModule} from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [QuestionComponent],
@@ -13,7 +14,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     QuestionRoutingModule,
     QuillModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TooltipModule.forRoot()
 
     
   ]

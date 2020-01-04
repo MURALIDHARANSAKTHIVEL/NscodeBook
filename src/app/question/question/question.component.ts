@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
+
+
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -8,46 +10,59 @@ import { FormControl } from '@angular/forms';
 })
 export class QuestionComponent implements OnInit {
   TemplateType = new FormControl();
+  isTemplatechange: boolean = true;
   isFirsttemplate: boolean = false;
   isSecondTemplate: boolean = false;
-  active;
-  Options: object = [1, 2, 3, 4];
-  constructor() { }
-  placeholder = "Type Question here Or Drop Question";
-  ngOnInit() {
-    this.TemplateType.valueChanges.subscribe(x => {
-
-      this.isFirsttemplate = false;
-      this.isSecondTemplate = false;
-    });
-  }
-  editorstyle = {
+  question:any;
+  editorPlaceholder = "Type Question here!!!!";
+  editorStyle = {
 
     'height': '300px',
     'overflow-y': 'auto'
   }
+  editorModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+      ['clean']
+    ]
+  }
 
-  Templatecontrol(event) {
-    if (this.isFirsttemplate) {
-      this.isFirsttemplate = false;
-    }
-    else if (this.TemplateType.value == '2') {
-
-      this.isSecondTemplate = true;
-    }
-    else if(this.TemplateType.value == '1')  {
-      this.isFirsttemplate = true;
-    }
-    else
-    {
-      this.isFirsttemplate = false;
-      this.isSecondTemplate = false;
-    }
-    // console.log(event.target.value)
-    // this.active=event.target.value;
-
-
-
+  Options = [
+    { value: 1, ischecked: false },
+    { value: 2, ischecked: false },
+    { value: 3, ischecked: false },
+    { value: 4, ischecked: false },
+  ];
+  constructor() { }
+  ngOnInit() {
+    this.TemplateType.valueChanges.subscribe(x => {
+      this.isTemplatechange = true;
+      if (x == '1') {
+        this.isFirsttemplate = !this.isFirsttemplate;
+        this.isSecondTemplate = false;
+      }
+      else if (x == '2') {
+        this.isSecondTemplate = !this.isSecondTemplate;
+        this.isFirsttemplate = false;
+      }
+      this.Options.map(x => x.ischecked = false);
+    });
+  }
+  firstTemplate(Option: any) {
+    this.Options.map(x => x.ischecked = false);
+    Option.ischecked = true;
 
   }
+
+
+
 }

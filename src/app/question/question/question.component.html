@@ -7,6 +7,8 @@
 
         <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
             <select class="form-control" [formControl]="TemplateType">
+                <option value="" [selected]="isSelected"> Please choose one </option>
+                <option value="0">TemplateType</option>
                 <option value="1">Template1</option>
                 <option value="2">Template2</option>
             </select>
@@ -28,25 +30,31 @@
     </div>
     <div class="row question-block">
         <div class=" col-sm-12 col-md-12 col-lg-12 ">
-            <quill-editor [placeholder]="placeholder" [styles]="editorstyle"></quill-editor>
+            <quill-editor [placeholder]="editorPlaceholder" [styles]="editorStyle" [modules]="editorModules"
+                [(ngModel)]="question"></quill-editor>
+        </div>{{data}}
+    </div>
+    <div class="row answer-block justify-content-center">
+        <div class="col-3 button-block">
+            <div *ngFor=" let option of Options, index as i" class="input-group">
+                <div class="input-group-prepend">
+                    <button class="btn btn-success" type="button"
+                        [ngClass]="{'btn-success': isTemplatechange,'btn-danger':option.ischecked && isSecondTemplate ,'btn-warning': option.ischecked && isFirsttemplate}"
+                        (click)="(isSecondTemplate)?option.ischecked=!option.ischecked:(isFirsttemplate)?firstTemplate(option):null"
+                        value="{{option.value}}"
+                        tooltip="{{(option.ischecked)?'deselect option':'select right option'}}">{{option.value}}</button>
+                </div>
+                <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
+                    aria-describedby="basic-addon1" [(ngModel)]="option.Optionname">
+            </div>
         </div>
-
 
     </div>
 
-    <div class="row answer-block justify-content-center">
-        <div class="col-3 button-block"
-            [ngClass]="{'firsttemplate':isFirsttemplate==true,'secondtemplate':isSecondTemplate==true}">
+</div>
 
-            <div *ngFor=" let option of Options,let i = index" class="input-group" [ngClass]="{active: !i}">
-                <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button" (click)="i=!i" (click)="Templatecontrol($event)"
-                        value="{{option}}">{{option}}</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-            </div>
 
-            <!-- <div class="input-group" [ngClass]="{active:button2.value==active}">
+<!-- <div class="input-group" [ngClass]="{active:button2.value==active}">
                 <div class="input-group-prepend">
                     <button class="btn btn-success" type="button" #button2 (click)="Templatecontrol($event)"
                         value="2">B</button>
@@ -66,11 +74,3 @@
                 </div>
                 <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
             </div> -->
-
-
-        </div>
-
-
-    </div>
-
-</div>
