@@ -6,6 +6,7 @@ import { QuestionComponent } from './question/question.component';
 import{QuillModule} from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import{TooltipModule} from 'ngx-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [QuestionComponent],
@@ -15,7 +16,8 @@ import{TooltipModule} from 'ngx-bootstrap';
     QuillModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    HttpClientModule
 
     
   ]

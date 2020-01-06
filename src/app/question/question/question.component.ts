@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-
+import { FormControl, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { Question } from '../Question';
+import { Option } from '../Option';
+import { QuestionService } from '../question.service';
 
 
 @Component({
@@ -9,11 +11,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./question.component.less']
 })
 export class QuestionComponent implements OnInit {
-  TemplateType = new FormControl();
+
+  questionData = new Question();
   isTemplatechange: boolean = true;
   isFirsttemplate: boolean = false;
   isSecondTemplate: boolean = false;
-  question:any;
+  categories: any;
+  i: number;
   editorPlaceholder = "Type Question here!!!!";
   editorStyle = {
 
@@ -36,15 +40,44 @@ export class QuestionComponent implements OnInit {
     ]
   }
 
-  Options = [
-    { value: 1, ischecked: false },
-    { value: 2, ischecked: false },
-    { value: 3, ischecked: false },
-    { value: 4, ischecked: false },
-  ];
-  constructor() { }
+
+  questionForm: FormGroup = this.formBuilder.group(
+    {
+      TemplateType: [],
+      CategoryKey: [],
+      Description: [],
+      Options: this.formBuilder.array([
+
+      ])
+
+    })
+  constructor(private questionservice: QuestionService, private formBuilder: FormBuilder) {
+
+    console.log(this.questionForm.controls.Options)
+  }
+
+
+
+
   ngOnInit() {
-    this.TemplateType.valueChanges.subscribe(x => {
+
+    this.questionservice.getCategories().subscribe(data => {
+      this.categories = data;
+      console.log(this.categories);
+    })
+
+    for (this.i = 0; this.i < 4; this.i++) {
+
+      this.Options.push(this.formBuilder.group({
+        IsAnswer:[false],
+        OptionName: [],
+        IsActive:[true]
+      }));
+
+    }
+
+
+    this.questionForm.controls.TemplateType.valueChanges.subscribe(x => {
       this.isTemplatechange = true;
       if (x == '1') {
         this.isFirsttemplate = !this.isFirsttemplate;
@@ -54,15 +87,25 @@ export class QuestionComponent implements OnInit {
         this.isSecondTemplate = !this.isSecondTemplate;
         this.isFirsttemplate = false;
       }
-      this.Options.map(x => x.ischecked = false);
+      this.questionData.Options.map(x => x.IsAnswer = false);
     });
   }
+
+
+  get Options() { return this.questionForm.get('Options') };
+
+
+
+
   firstTemplate(Option: any) {
-    this.Options.map(x => x.ischecked = false);
-    Option.ischecked = true;
+    this.questionData.Options.map(x => x.IsAnswer = false);
+    Option.IsAnswer = true;
 
   }
 
-
+check(i:any)
+{
+  console.log(i)
+}
 
 }

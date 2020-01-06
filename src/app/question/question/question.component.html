@@ -3,74 +3,56 @@
 
         <h4>ADD QUESTION</h4>
     </div>
-    <div class="row">
+    <form [formGroup]="questionForm">
+        <div class="row">
 
-        <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
-            <select class="form-control" [formControl]="TemplateType">
-                <option value="" [selected]="isSelected"> Please choose one </option>
-                <option value="0">TemplateType</option>
-                <option value="1">Template1</option>
-                <option value="2">Template2</option>
-            </select>
+            <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
+                <select class="form-control" formControlName="TemplateType">
+                    <option value="0">TemplateType</option>
+                    <option value="1">Template1</option>
+                    <option value="2">Template2</option>
+                </select>
 
-        </div>
-        <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
-            <select class="form-control" (change)="onChangeTemplateType($event.target.value)">
-                <option>Category Type</option>
-                <option>Java</option>
-                <option>c</option>
-                <option>c++</option>
-                <option>Angular</option>
-                <option>Database</option>
-                <option>c</option>
-                <option>c++</option>
-                <option>Angular</option>
-            </select>
-        </div>
-    </div>
-    <div class="row question-block">
-        <div class=" col-sm-12 col-md-12 col-lg-12 ">
-            <quill-editor [placeholder]="editorPlaceholder" [styles]="editorStyle" [modules]="editorModules"
-                [(ngModel)]="question"></quill-editor>
-        </div>{{data}}
-    </div>
-    <div class="row answer-block justify-content-center">
-        <div class="col-3 button-block">
-            <div *ngFor=" let option of Options, index as i" class="input-group">
-                <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button"
-                        [ngClass]="{'btn-success': isTemplatechange,'btn-danger':option.ischecked && isSecondTemplate ,'btn-warning': option.ischecked && isFirsttemplate}"
-                        (click)="(isSecondTemplate)?option.ischecked=!option.ischecked:(isFirsttemplate)?firstTemplate(option):null"
-                        value="{{option.value}}"
-                        tooltip="{{(option.ischecked)?'deselect option':'select right option'}}">{{option.value}}</button>
-                </div>
-                <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
-                    aria-describedby="basic-addon1" [(ngModel)]="option.Optionname">
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
+                <select class="form-control" formControlName="CategoryKey">
+                    <option vlaue="">Category Type</option>
+                    <option *ngFor="let category of categories" value="category.categoryKey">
+                        {{category.description}}
+                    </option>
+                </select>
             </div>
         </div>
+        <div class="row question-block">
+            <div class=" col-sm-12 col-md-12 col-lg-12 ">
+                <quill-editor [placeholder]="editorPlaceholder" [styles]="editorStyle" [modules]="editorModules"
+                    formControlName="Description"></quill-editor>
+            </div>
+        </div>
+        {{questionForm.value | json}}
+        <div class="row answer-block justify-content-center">
+            <div class="col-4 button-block" formArrayName="Options">
 
-    </div>
+                <div *ngFor=" let data of Options.controls, let i=index" class="input-group">
+                    <div [formGroupName]="i">
+
+
+
+                        <div class="input-group-prepend">
+                            <button class="btn btn-success" type="button"
+                                [ngClass]="{'btn-success': isTemplatechange,'btn-danger':IsAnswer && isSecondTemplate ,'btn-warning': IsAnswer && isFirsttemplate}"
+                                (click)="(isSecondTemplate)?data.controls['IsAnswer'].value=!data.controls['IsAnswer'].value:(isFirsttemplate)?firstTemplate(option):null"
+                                value="{{i+1}}"
+                                tooltip="{{(data.controls['IsAnswer'].value)?'Deselect Option':'Select Right Option'}}">{{i+1}}</button>
+
+                            <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
+                                aria-describedby="basic-addon1" formControlName="OptionName">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
 
 </div>
-
-
-<!-- <div class="input-group" [ngClass]="{active:button2.value==active}">
-                <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button" #button2 (click)="Templatecontrol($event)"
-                        value="2">B</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group" [ngClass]="{active:active==button3.value}">
-                <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button" #button3 (click)="Templatecontrol($event)"
-                        value="3">C</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-            </div>
-            <div class="input-group" [ngClass]="{active:active==button4.value}">
-                <div class="input-group-prepend">
-                    <button class="btn btn-success" type="button" value="4"  #button4  (click)="Templatecontrol($event)">D</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-            </div> -->
