@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { Question } from '../Question';
-import { Option } from '../Option';
+import { ICategory } from '../categoryInterface';
 import { QuestionService } from '../question.service';
 
 
@@ -12,16 +11,13 @@ import { QuestionService } from '../question.service';
 })
 export class QuestionComponent implements OnInit {
 
-  questionData = new Question();
-  isTemplatechange: boolean = true;
-  isFirsttemplate: boolean = false;
-  isSecondTemplate: boolean = false;
-  categories: any;
-  i: number;
+  optionsTemplate: number;
+  categories: ICategory;
+  AnswerError: boolean = true;
   editorPlaceholder = "Type Question here!!!!";
   editorStyle = {
 
-    'height': '300px',
+    'height': '250px',
     'overflow-y': 'auto'
   }
   editorModules = {
@@ -43,9 +39,10 @@ export class QuestionComponent implements OnInit {
 
   questionForm: FormGroup = this.formBuilder.group(
     {
-      TemplateType: [],
-      CategoryKey: [],
-      Description: [],
+      TemplateTypeKey: ['', [Validators.required,Validators.min(1)]],
+      CategoryKey: ['', [Validators.required,Validators.min(1)]],
+      Description: ['', [Validators.required]],
+      IsActive: [true, [Validators.required]],
       Options: this.formBuilder.array([
 
       ])
@@ -53,59 +50,61 @@ export class QuestionComponent implements OnInit {
     })
   constructor(private questionservice: QuestionService, private formBuilder: FormBuilder) {
 
-    console.log(this.questionForm.controls.Options)
   }
 
 
 
 
   ngOnInit() {
-
+    //Get categories from Questionservice class
     this.questionservice.getCategories().subscribe(data => {
       this.categories = data;
-      console.log(this.categories);
-    })
+    });
 
-    for (this.i = 0; this.i < 4; this.i++) {
+    //for 4 option default push the formgroup in the formArray
+    for (let i = 0; i < 4; i++) {
 
       this.Options.push(this.formBuilder.group({
-        IsAnswer:[false],
-        OptionName: [],
-        IsActive:[true]
+        IsAnswer: [false, [Validators.required]],
+        OptionName: ['', [Validators.required]],
+        IsActive: [true, [Validators.required]]
       }));
 
     }
-
-
-    this.questionForm.controls.TemplateType.valueChanges.subscribe(x => {
-      this.isTemplatechange = true;
-      if (x == '1') {
-        this.isFirsttemplate = !this.isFirsttemplate;
-        this.isSecondTemplate = false;
-      }
-      else if (x == '2') {
-        this.isSecondTemplate = !this.isSecondTemplate;
-        this.isFirsttemplate = false;
-      }
-      this.questionData.Options.map(x => x.IsAnswer = false);
+    // Observe Template change.
+    this.questionForm.controls.TemplateTypeKey.valueChanges.subscribe(x => {
+      this.optionsTemplate = x;
+      this.Options.controls.map(x => x.value.IsAnswer = false);
     });
   }
 
+  get Options() { return this.questionForm.get('Options') as FormArray };
 
-  get Options() { return this.questionForm.get('Options') };
+  selectAnswer(formGroup: FormGroup) {
+    let TemplateType = this.questionForm.get('TemplateTypeKey').value;
 
-
-
-
-  firstTemplate(Option: any) {
-    this.questionData.Options.map(x => x.IsAnswer = false);
-    Option.IsAnswer = true;
+    if (TemplateType == '1') {//single select option
+      this.Options.controls.map(x => x.value.IsAnswer = false);
+      this.Options.controls.filter(x => x == formGroup).map(y => y.value.IsAnswer = true);
+    }
+    else if (TemplateType == '2') {//Mutiple select option
+      this.Options.controls.filter(x => x == formGroup).map(y => y.value.IsAnswer = !y.value.IsAnswer);
+    }
 
   }
 
-check(i:any)
-{
-  console.log(i)
-}
+  questionFormSubmit() {
+    let IsAnswer = this.Options.controls.filter(x => x.value.IsAnswer == true)
+    if (IsAnswer.length!=0) {
+
+      this.questionservice.createQuestion(this.questionForm.value).subscribe(data => {
+        console.log(data);
+      })
+    }
+    else {
+      this.AnswerError = false;
+    }
+
+  }
 
 }

@@ -7,9 +7,11 @@ import{QuillModule} from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import{TooltipModule} from 'ngx-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { QuestionDetailsComponent } from './question-details/question-details.component';
+import { MatTableModule } from '@angular/material';
 
 @NgModule({
-  declarations: [QuestionComponent],
+  declarations: [QuestionComponent, QuestionDetailsComponent],
   imports: [
     CommonModule,
     QuestionRoutingModule,
@@ -17,7 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     ReactiveFormsModule,
     TooltipModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    MatTableModule
 
     
   ]

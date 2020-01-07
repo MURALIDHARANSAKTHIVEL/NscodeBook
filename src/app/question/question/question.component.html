@@ -1,26 +1,30 @@
 <div class="container-fluid">
     <div class="row  justify-content-center">
 
-        <h4>ADD QUESTION</h4>
+        <h4>QUESTION DETAILS</h4>
     </div>
     <form [formGroup]="questionForm">
         <div class="row">
 
             <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
-                <select class="form-control" formControlName="TemplateType">
-                    <option value="0">TemplateType</option>
+                <select class="form-control" formControlName="TemplateTypeKey">
+                    <option value="">TemplateType</option>
                     <option value="1">Template1</option>
                     <option value="2">Template2</option>
                 </select>
-
+                <div *ngIf="questionForm.controls.TemplateTypeKey?.invalid && (questionForm.controls.TemplateTypeKey.dirty || questionForm.controls.TemplateTypeKey.touched)"
+                    class="alert alert-danger"> Template must be required</div>
+                
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
                 <select class="form-control" formControlName="CategoryKey">
-                    <option vlaue="">Category Type</option>
-                    <option *ngFor="let category of categories" value="category.categoryKey">
+                    <option value="">Category Type</option>
+                    <option *ngFor="let category of categories" value="{{category.categoryKey}}">
                         {{category.description}}
                     </option>
                 </select>
+                <div *ngIf="questionForm.controls.CategoryKey?.invalid && (questionForm.controls.CategoryKey.dirty || questionForm.controls.CategoryKey.touched)"
+                    class="alert alert-danger"> Category must be required</div>
             </div>
         </div>
         <div class="row question-block">
@@ -35,24 +39,36 @@
 
                 <div *ngFor=" let data of Options.controls, let i=index" class="input-group">
                     <div [formGroupName]="i">
-
-
-
                         <div class="input-group-prepend">
                             <button class="btn btn-success" type="button"
-                                [ngClass]="{'btn-success': isTemplatechange,'btn-danger':IsAnswer && isSecondTemplate ,'btn-warning': IsAnswer && isFirsttemplate}"
-                                (click)="(isSecondTemplate)?data.controls['IsAnswer'].value=!data.controls['IsAnswer'].value:(isFirsttemplate)?firstTemplate(option):null"
+                                [ngClass]="{'btn-danger':data.value.IsAnswer && (optionsTemplate==1 ||  optionsTemplate==2)}"
                                 value="{{i+1}}"
-                                tooltip="{{(data.controls['IsAnswer'].value)?'Deselect Option':'Select Right Option'}}">{{i+1}}</button>
+                                tooltip="{{data.value.IsAnswer?'Deselect Option':'Select Right Option'}}"
+                                (click)="selectAnswer(data)">{{i+1}}</button>
 
                             <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
                                 aria-describedby="basic-addon1" formControlName="OptionName">
                         </div>
                     </div>
                 </div>
+                <div [hidden]="AnswerError" class="error-details">
+                    Mark Correct Answer Above!!!
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row  justify-content-center">
+            <div class="col-3">
+
+                <button class="btn btn-primary" type="submit" [disabled]="questionForm.invalid"
+                    (click)="questionFormSubmit()">submit</button>
             </div>
 
         </div>
+
     </form>
+
+
 
 </div>
