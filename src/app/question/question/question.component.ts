@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { ICategory } from '../categoryInterface';
 import { QuestionService } from '../question.service';
-
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-question',
@@ -23,10 +23,6 @@ export class QuestionComponent implements OnInit {
   editorModules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
-      ['blockquote', 'code-block'],
-      [{ 'header': 1 }, { 'header': 2 }],
-      [{ 'indent': '-1' }, { 'indent': '+1' }],
-      [{ 'direction': 'rtl' }],
       [{ 'size': ['small', false, 'large', 'huge'] }],
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
       [{ 'color': [] }, { 'background': [] }],
@@ -39,21 +35,20 @@ export class QuestionComponent implements OnInit {
 
   questionForm: FormGroup = this.formBuilder.group(
     {
-      TemplateTypeKey: ['', [Validators.required,Validators.min(1)]],
-      CategoryKey: ['', [Validators.required,Validators.min(1)]],
-      Description: ['', [Validators.required]],
+
+      templateTypeKey: ['', [Validators.required, Validators.min(1)]],
+      categoryKey: ['', [Validators.required, Validators.min(1)]],
+      description: ['', [Validators.required]],
       IsActive: [true, [Validators.required]],
-      Options: this.formBuilder.array([
+      options: this.formBuilder.array([
 
       ])
 
     })
-  constructor(private questionservice: QuestionService, private formBuilder: FormBuilder) {
+  constructor(private questionservice: QuestionService, private formBuilder: FormBuilder,
+    private router: ActivatedRoute) {
 
   }
-
-
-
 
   ngOnInit() {
     //Get categories from Questionservice class
@@ -63,39 +58,49 @@ export class QuestionComponent implements OnInit {
 
     //for 4 option default push the formgroup in the formArray
     for (let i = 0; i < 4; i++) {
-
-      this.Options.push(this.formBuilder.group({
-        IsAnswer: [false, [Validators.required]],
-        OptionName: ['', [Validators.required]],
-        IsActive: [true, [Validators.required]]
+      this.options.push(this.formBuilder.group({
+        isAnswer: [false, [Validators.required]],
+        optionName: ['', [Validators.required]],
+        isActive: [true, [Validators.required]]
       }));
-
+      console.log()
     }
     // Observe Template change.
-    this.questionForm.controls.TemplateTypeKey.valueChanges.subscribe(x => {
+    this.questionForm.controls.templateTypeKey.valueChanges.subscribe(x => {
       this.optionsTemplate = x;
-      this.Options.controls.map(x => x.value.IsAnswer = false);
+      this.options.controls.filter(x => x.value.isAnswer ? x.value.isAnswer = false : x.value.isAnswer);
+
     });
+
+    this.router.queryParams.subscribe(data => {
+      let questionKey = data.questionKey || 0;
+      if (questionKey != 0) {
+        this.questionservice.getQuestionById(data.questionKey).subscribe(data => {
+          this.questionForm.patchValue(data);
+        });
+      }
+    })
+
   }
 
-  get Options() { return this.questionForm.get('Options') as FormArray };
+  get options() { return this.questionForm.get('options') as FormArray };
 
   selectAnswer(formGroup: FormGroup) {
-    let TemplateType = this.questionForm.get('TemplateTypeKey').value;
+    let TemplateType = this.questionForm.get('templateTypeKey').value;
 
     if (TemplateType == '1') {//single select option
-      this.Options.controls.map(x => x.value.IsAnswer = false);
-      this.Options.controls.filter(x => x == formGroup).map(y => y.value.IsAnswer = true);
+      //this.options.controls.filter( x=> x.value.isAnswer?!x.value.isAnswer:x.value.isAnswer);
+      this.options.controls.filter(x => x == formGroup ? x.value.isAnswer = true : x.value.isAnswer = false);
     }
     else if (TemplateType == '2') {//Mutiple select option
-      this.Options.controls.filter(x => x == formGroup).map(y => y.value.IsAnswer = !y.value.IsAnswer);
+      this.options.controls.filter(x => x == formGroup ? x.value.isAnswer = !x.value.isAnswer : x.value.isAnswer)
     }
 
   }
 
   questionFormSubmit() {
-    let IsAnswer = this.Options.controls.filter(x => x.value.IsAnswer == true)
-    if (IsAnswer.length!=0) {
+    let isAnswer = this.options.controls.filter(x => x.value.isAnswer == true)
+    if (isAnswer.length != 0) {
 
       this.questionservice.createQuestion(this.questionForm.value).subscribe(data => {
         console.log(data);

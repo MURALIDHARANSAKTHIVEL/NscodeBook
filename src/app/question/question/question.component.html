@@ -7,47 +7,46 @@
         <div class="row">
 
             <div class="col-sm-6 col-md-6 col-lg-6 template text-center">
-                <select class="form-control" formControlName="TemplateTypeKey">
+                <select class="form-control" formControlName="templateTypeKey">
                     <option value="">TemplateType</option>
                     <option value="1">Template1</option>
                     <option value="2">Template2</option>
                 </select>
-                <div *ngIf="questionForm.controls.TemplateTypeKey?.invalid && (questionForm.controls.TemplateTypeKey.dirty || questionForm.controls.TemplateTypeKey.touched)"
+                <div *ngIf="questionForm.controls.templateTypeKey?.invalid && (questionForm.controls.templateTypeKey.dirty || questionForm.controls.templateTypeKey.touched)"
                     class="alert alert-danger"> Template must be required</div>
                 
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
-                <select class="form-control" formControlName="CategoryKey">
+                <select class="form-control" formControlName="categoryKey">
                     <option value="">Category Type</option>
                     <option *ngFor="let category of categories" value="{{category.categoryKey}}">
                         {{category.description}}
                     </option>
                 </select>
-                <div *ngIf="questionForm.controls.CategoryKey?.invalid && (questionForm.controls.CategoryKey.dirty || questionForm.controls.CategoryKey.touched)"
+                <div *ngIf="questionForm.controls.CategoryKey?.invalid && (questionForm.controls.categoryKey.dirty || questionForm.controls.categoryKey.touched)"
                     class="alert alert-danger"> Category must be required</div>
             </div>
         </div>
         <div class="row question-block">
             <div class=" col-sm-12 col-md-12 col-lg-12 ">
                 <quill-editor [placeholder]="editorPlaceholder" [styles]="editorStyle" [modules]="editorModules"
-                    formControlName="Description"></quill-editor>
+                    formControlName="description"></quill-editor>
             </div>
         </div>
-        {{questionForm.value | json}}
         <div class="row answer-block justify-content-center">
-            <div class="col-4 button-block" formArrayName="Options">
+            <div class="col-4 button-block" formArrayName="options">
 
-                <div *ngFor=" let data of Options.controls, let i=index" class="input-group">
+                <div *ngFor=" let data of options.controls, let i=index" class="input-group">
                     <div [formGroupName]="i">
                         <div class="input-group-prepend">
                             <button class="btn btn-success" type="button"
-                                [ngClass]="{'btn-danger':data.value.IsAnswer && (optionsTemplate==1 ||  optionsTemplate==2)}"
+                                [ngClass]="{'btn-danger':data.value.isAnswer && (optionsTemplate==1 ||  optionsTemplate==2)}"
                                 value="{{i+1}}"
-                                tooltip="{{data.value.IsAnswer?'Deselect Option':'Select Right Option'}}"
+                                tooltip="{{data.value.isAnswer?'Deselect Option':'Select Right Option'}}"
                                 (click)="selectAnswer(data)">{{i+1}}</button>
 
                             <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
-                                aria-describedby="basic-addon1" formControlName="OptionName">
+                                aria-describedby="basic-addon1" formControlName="optionName">
                         </div>
                     </div>
                 </div>

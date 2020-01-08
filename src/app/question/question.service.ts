@@ -11,7 +11,7 @@ export class QuestionService {
   constructor(private http: HttpClient) { }
   baseUrl = "http://localhost:5000/api/";
 
-  public getCategories(): Observable<ICategory> {
+  public getCategories(): Observable<any> {
 
     return this.http.get(this.baseUrl + "categories");
 
@@ -21,12 +21,15 @@ export class QuestionService {
     return this.http.post(this.baseUrl + "questions", questionForm);
   }
 
-public getQuestion():Observable<any>
+  public getQuestion(): Observable<any> {
+
+    return this.http.get(this.baseUrl + "questions");
+  }
+public getQuestionById(questionId:number):Observable<any>
 {
 
-  return this.http.get(this.baseUrl+"questions");
+  return this.http.get(this.baseUrl+"questions/"+questionId);
 }
-
 
 }
 
