@@ -31,6 +31,11 @@ public getQuestionById(questionId:number):Observable<any>
   return this.http.get(this.baseUrl+"questions/"+questionId);
 }
 
+public updateQuestion(questionId:number,changeData:any):Observable<any>
+{
+
+  return this.http.put(this.baseUrl+"questions/"+questionId,changeData);
+}
 }
 
 

@@ -12,8 +12,8 @@
                     <option value="1">Template1</option>
                     <option value="2">Template2</option>
                 </select>
-                <div *ngIf="questionForm.controls.templateTypeKey?.invalid && (questionForm.controls.templateTypeKey.dirty || questionForm.controls.templateTypeKey.touched)"
-                    class="alert alert-danger"> Template must be required</div>
+                <!-- <div *ngIf="questionForm.controls.templateTypeKey?.invalid && (questionForm.controls.templateTypeKey.dirty || questionForm.controls.templateTypeKey.touched)"
+                    class="alert alert-danger"> Template must be required</div> -->
                 
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
@@ -23,8 +23,8 @@
                         {{category.description}}
                     </option>
                 </select>
-                <div *ngIf="questionForm.controls.CategoryKey?.invalid && (questionForm.controls.categoryKey.dirty || questionForm.controls.categoryKey.touched)"
-                    class="alert alert-danger"> Category must be required</div>
+                <!-- <div *ngIf="questionForm.controls.CategoryKey?.invalid && (questionForm.controls.categoryKey.dirty || questionForm.controls.categoryKey.touched)"
+                    class="alert alert-danger"> Category must be required</div> -->
             </div>
         </div>
         <div class="row question-block">
@@ -43,16 +43,16 @@
                                 [ngClass]="{'btn-danger':data.value.isAnswer && (optionsTemplate==1 ||  optionsTemplate==2)}"
                                 value="{{i+1}}"
                                 tooltip="{{data.value.isAnswer?'Deselect Option':'Select Right Option'}}"
-                                (click)="selectAnswer(data)">{{i+1}}</button>
+                                (click)="selectAnswer(data)" tooltipClass="customClass">{{i+1}}</button>
 
                             <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
                                 aria-describedby="basic-addon1" formControlName="optionName">
                         </div>
                     </div>
                 </div>
-                <div [hidden]="AnswerError" class="error-details">
+                <!-- <div [hidden]="AnswerError"  class="alert alert-danger" >
                     Mark Correct Answer Above!!!
-                </div>
+                </div> -->
             </div>
 
 

@@ -39,7 +39,6 @@
               "./node_modules/bootstrap/dist/js/bootstrap.js",
               "./node_modules/popper.js/dist/umd/popper.min.js",
               "./node_modules/quill/dist/quill.js"
-             
             ]
           },
           "configurations": {
@@ -71,6 +70,9 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "es5": {
+              "tsConfig": "./tsconfig.es5.json"
             }
           }
         },
@@ -82,6 +84,9 @@
           "configurations": {
             "production": {
               "browserTarget": "NsCodeBook:build:production"
+            },
+            "es5": {
+              "browserTarget": "NsCodeBook:build:es5"
             }
           }
         },
