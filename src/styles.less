@@ -3,6 +3,7 @@
 @notify_color:#f5f5f5;
 @bg_c_succcess:green;
 @bg_c_error:#d90000;
+@disabled_color:#616161;
 html,body
 {
     min-height: 100%;
@@ -28,4 +29,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     color: @notify_color;
     text-align: center;
    
+}
+
+svg{
+width: 20px;
+cursor: pointer;
+}
+
+.disabled
+{
+    
+    cursor: no-drop !important;
+    pointer-events: stroke;
+    border-color:@disabled_color !important;
+   background-color: @disabled_color !important;
 }

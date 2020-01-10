@@ -14,7 +14,7 @@
                 </select>
                 <!-- <div *ngIf="questionForm.controls.templateTypeKey?.invalid && (questionForm.controls.templateTypeKey.dirty || questionForm.controls.templateTypeKey.touched)"
                     class="alert alert-danger"> Template must be required</div> -->
-                
+
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
                 <select class="form-control" formControlName="categoryKey">
@@ -39,10 +39,10 @@
                 <div *ngFor=" let data of options.controls, let i=index" class="input-group">
                     <div [formGroupName]="i">
                         <div class="input-group-prepend">
-                            <button class="btn btn-success" type="button"
-                                [ngClass]="{'btn-danger':data.value.isAnswer && (optionsTemplate==1 ||  optionsTemplate==2)}"
+                            <button class="btn btn-secondary" type="button"
+                                [ngClass]="{'btn-success':data.value.isAnswer && (optionsTemplate==1 ||  optionsTemplate==2)}"
                                 value="{{i+1}}"
-                                tooltip="{{data.value.isAnswer?'Deselect Option':'Select Right Option'}}"
+                                tooltip="{{data.value.isAnswer?'DESELECT OPTION':(questionForm.value.templateTypeKey=='')?'CHOOSE TEMPLATE':'SELECT OPTION'}}"
                                 (click)="selectAnswer(data)" tooltipClass="customClass">{{i+1}}</button>
 
                             <input type="text" class="form-control" placeholder="Answer Here" aria-label=""
@@ -57,11 +57,12 @@
 
 
         </div>
-        <div class="row  justify-content-center">
-            <div class="col-3">
-
-                <button class="btn btn-primary" type="submit" [disabled]="questionForm.invalid"
-                    (click)="questionFormSubmit()">submit</button>
+        <div class="row  justify-content-center endpage">
+            <div class="col-3 buttongroup" >
+                <button class="btn btn-primary" type="submit" [ngClass]="questionForm.invalid?'disabled':btn-primary"
+                    (click)="questionForm.invalid?'':questionFormSubmit()">submit</button>
+                <button class="btn btn-primary" type="submit"
+                    (click)="questionForm.reset({templateTypeKey:'',categoryKey:''})">reset</button>
             </div>
 
         </div>

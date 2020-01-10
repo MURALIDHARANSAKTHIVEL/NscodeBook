@@ -9,6 +9,7 @@ import { TooltipModule } from 'ngx-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule, MatSnackBarModule } from '@angular/material';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 const material = [
   MatTableModule,
@@ -25,7 +26,8 @@ const material = [
     ReactiveFormsModule,
     TooltipModule.forRoot(),
     HttpClientModule,
-    material
+    material,
+    AngularSvgIconModule.forRoot()
 
 
 

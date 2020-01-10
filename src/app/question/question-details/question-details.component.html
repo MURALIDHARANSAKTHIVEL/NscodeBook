@@ -1,7 +1,7 @@
 <div class="container-fluid pagewrapper">
     <div class="row">
         <div class="col-12">
-            <button type="button" class="btn btn-primary" (click)="navigateQuestionScreen()">CREATE  QUESTION</button>
+            <button type="button" class="btn btn-primary" (click)="navigateQuestionScreen()"><i class="fa fa-plus" aria-hidden="true">&nbsp; CREATE  QUESTION</i></button>
             <hr>
         </div>
 
@@ -40,8 +40,8 @@
                         </ng-container>
                         <ng-container matColumnDef="Edit">
                             <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell"> EDIT</th>
-                            <td mat-cell *matCellDef="let element,let i= index"> <button class="btn  btn-link edit"
-                                    (click)="navigateQuestionScreen(element.questionKey)">edit</button>
+                            <td mat-cell *matCellDef="let element,let i= index"> 
+                                <svg-icon src="assets\Icons\edit.svg" (click)="navigateQuestionScreen(element.questionKey)"></svg-icon>
                             </td>
                         </ng-container>
 

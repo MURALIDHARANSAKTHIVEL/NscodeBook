@@ -50,7 +50,7 @@ export class QuestionComponent implements OnInit {
 
     })
   constructor(private questionservice: QuestionService, private formBuilder: FormBuilder,
-    private router: ActivatedRoute, private notify: NotificationService) {
+    private router: ActivatedRoute, private notify: NotificationService,private route :Router ) {
 
   }
 
@@ -63,6 +63,7 @@ export class QuestionComponent implements OnInit {
     //for 4 option default push the formgroup in the formArray
     for (let i = 0; i < 4; i++) {
       this.options.push(this.formBuilder.group({
+        optionKey:[0],
         isAnswer: [false, [Validators.required]],
         optionName: ['', [Validators.required]],
         isActive: [true, [Validators.required]]
@@ -83,6 +84,7 @@ export class QuestionComponent implements OnInit {
         this.questionEditFlag = true;
         this.questionservice.getQuestionById(data.questionKey).subscribe(data => {
           this.questionForm.patchValue(data);
+          console.log(data)
         });
       }
       else {
@@ -111,6 +113,7 @@ export class QuestionComponent implements OnInit {
     if (isAnswer.length != 0) {
       this.AnswerError = true
       if (this.questionEditFlag) {
+        console.log(this.questionForm.value);
         this.questionservice.updateQuestion(this.questionKeyChange, this.questionForm.value).subscribe(data => {
           this.notify.statusFlag = true;
           this.notify.notificationMessage.next('updated successfully !!!');
@@ -118,8 +121,10 @@ export class QuestionComponent implements OnInit {
         });
       }
       else {
+        console.log(this.questionForm.value);
         this.questionservice.createQuestion(this.questionForm.value).subscribe(data => {
-          this.questionForm.reset({ templateTypeKey: '', categoryKey: '' });
+        
+          this.route.navigate(['dashboard/question-details']);
           this.notify.statusFlag = true;
           this.notify.notificationMessage.next('created successfully !!!');
 
