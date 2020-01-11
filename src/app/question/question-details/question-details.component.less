@@ -3,52 +3,44 @@
 {
     padding: 15px 0px 10px 0px;
 }
- .table th
-{
-//  text-align-last: center;
-//  padding:0.75em;
 
+
+table{
+  width: 100%;
 }
 
 .status
 {
     color :red;
 }
-
 .tableheadercell 
 {
-    color: black;
-    font-weight: 500;
-    vertical-align: middle ;
-    padding-right: 4px;
 
-    
+  vertical-align: middle !important;
+  text-align: center;
+  color: black;
 }
-// .tableheadercell ::ng-deep .mat-sort-header-container {
-   
-//     //  justify-content:center;
-  
-    
-//   }
-  .mat-cell
-  {
-     padding: 0;
-     border-bottom-width: 1px;
-     border-bottom-style: solid;
-     width: 2%;
-     overflow-wrap: break-word;
-     word-spacing: normal;
-     word-break: break-word;
-  }
+
+
+
+th::ng-deep .mat-sort-header-container {
+ 
+  display:flex;
+  justify-content:center;
+}
+.mat-cell
+{
+   padding: 4px;
+   border-bottom-width: 1px;
+   border-bottom-style: solid;
+   overflow-wrap: break-word;
+   word-spacing: normal;
+   word-break: break-word;
+}
   .card
   {
     border: none;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 
-  }
-  .endpage.buttongroup button
-  {  
-            margin-right: 10px;
-     
   }

@@ -1,7 +1,8 @@
 <div class="container-fluid pagewrapper">
     <div class="row">
         <div class="col-12">
-            <button type="button" class="btn btn-primary" (click)="navigateQuestionScreen()"><i class="fa fa-plus" aria-hidden="true">&nbsp; CREATE  QUESTION</i></button>
+            <button type="button" class="btn btn-primary" (click)="navigateQuestionScreen()"><i class="fa fa-plus"
+                    aria-hidden="true">&nbsp; CREATE QUESTION</i></button>
             <hr>
         </div>
 
@@ -23,32 +24,43 @@
                         </ng-container> -->
 
                         <ng-container matColumnDef="No">
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell"> No. </th>
+                            <th mat-header-cell *matHeaderCellDef  class="tableheadercell"
+                                style="width: 1%;"> No. </th>
                             <td mat-cell *matCellDef="let element,let i= index"> {{i+1}} </td>
                         </ng-container>
-                        <ng-container matColumnDef="templateTypeKey" >
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell"> TEMPLATE </th>
+                        <ng-container matColumnDef="templateTypeKey">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableheadercell"
+                                style="width: 1%;"> TEMPLATE
+                            </th>
                             <td mat-cell *matCellDef="let element,let i= index"> {{element.templateTypeKey}} </td>
                         </ng-container>
                         <ng-container matColumnDef="categoryKey">
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell">CATEGORY </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableheadercell"
+                                style="width: 1%;">CATEGORY </th>
                             <td mat-cell *matCellDef="let element,let i= index"> {{element.categoryKey}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Description">
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell"> DESCRIPTION </th>
-                            <td mat-cell *matCellDef="let element,let i= index"> {{element.description}} </td>
+                            <th mat-header-cell *matHeaderCellDef class="tableheadercell"
+                                style="width: 80%;"> DESCRIPTION
+                            </th>
+                            <td mat-cell *matCellDef="let element,let i= index"> <span [innerHTML]="element.description"
+                                    [style.fontsize]="10"></span></td>
                         </ng-container>
                         <ng-container matColumnDef="Edit">
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell"> EDIT</th>
-                            <td mat-cell *matCellDef="let element,let i= index"> 
-                                <svg-icon src="assets\Icons\edit.svg" (click)="navigateQuestionScreen(element.questionKey)"></svg-icon>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableheadercell"
+                                style="width: 7%;"> EDIT</th>
+                            <td mat-cell *matCellDef="let element,let i= index">
+                                <svg-icon src="assets\Icons\edit.svg"
+                                    (click)="navigateQuestionScreen(element.questionKey)"></svg-icon>
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="isActive">
-                            <th mat-header-cell *matHeaderCellDef  mat-sort-header class="tableheadercell"> STATUS</th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableheadercell"
+                                style="width: 10%;"> STATUS</th>
                             <td mat-cell *matCellDef="let element,let i= index"> <button class="btn  btn-link status"
-                                    (click)="element.isActive=!element.isActive" (click)="statusOnChange(element.questionKey,element)">{{element.isActive?'Active':'Inactive'}}</button>
+                                    (click)="element.isActive=!element.isActive"
+                                    (click)="statusOnChange(element.questionKey,element)">{{element.isActive?'Active':'Inactive'}}</button>
                             </td>
                         </ng-container>
 

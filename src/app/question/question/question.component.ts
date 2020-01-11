@@ -27,8 +27,7 @@ export class QuestionComponent implements OnInit {
   editorModules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
-      [{ 'size': ['small', false, 'large', 'huge'] }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'size': ['small'] }],
       [{ 'color': [] }, { 'background': [] }],
       [{ 'font': [] }],
       [{ 'align': [] }],
@@ -50,7 +49,7 @@ export class QuestionComponent implements OnInit {
 
     })
   constructor(private questionservice: QuestionService, private formBuilder: FormBuilder,
-    private router: ActivatedRoute, private notify: NotificationService,private route :Router ) {
+    private router: ActivatedRoute, private notify: NotificationService, private route: Router) {
 
   }
 
@@ -63,7 +62,7 @@ export class QuestionComponent implements OnInit {
     //for 4 option default push the formgroup in the formArray
     for (let i = 0; i < 4; i++) {
       this.options.push(this.formBuilder.group({
-        optionKey:[0],
+        optionKey: [0],
         isAnswer: [false, [Validators.required]],
         optionName: ['', [Validators.required]],
         isActive: [true, [Validators.required]]
@@ -109,22 +108,22 @@ export class QuestionComponent implements OnInit {
   }
 
   questionFormSubmit() {
+    console.log("asdsad");
     let isAnswer = this.options.controls.filter(x => x.value.isAnswer == true)
     if (isAnswer.length != 0) {
       this.AnswerError = true
       if (this.questionEditFlag) {
-        console.log(this.questionForm.value);
         this.questionservice.updateQuestion(this.questionKeyChange, this.questionForm.value).subscribe(data => {
+          this.defaultpage();
           this.notify.statusFlag = true;
           this.notify.notificationMessage.next('updated successfully !!!');
 
         });
       }
       else {
-        console.log(this.questionForm.value);
         this.questionservice.createQuestion(this.questionForm.value).subscribe(data => {
-        
-          this.route.navigate(['dashboard/question-details']);
+          this.defaultpage();
+
           this.notify.statusFlag = true;
           this.notify.notificationMessage.next('created successfully !!!');
 
@@ -140,4 +139,12 @@ export class QuestionComponent implements OnInit {
 
   }
 
+  reset() {
+    this.questionForm.reset({ templateTypeKey: '', categoryKey: '' });
+  }
+
+  defaultpage() {
+    this.route.navigate(['dashboard/question-details']);
+
+  }
 }
