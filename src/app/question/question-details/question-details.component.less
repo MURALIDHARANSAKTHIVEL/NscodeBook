@@ -1,4 +1,6 @@
 
+@status:red;
+@tableheader:black;
 .row
 {
     padding: 15px 0px 10px 0px;
@@ -7,27 +9,30 @@
 
 table{
   width: 100%;
+  max-height: 400px;
+  table-layout: auto;
 }
 
 .status
 {
-    color :red;
+    color :@status;
 }
 .tableheadercell 
 {
 
   vertical-align: middle !important;
   text-align: center;
-  color: black;
+  color: @tableheader;
+ 
 }
-
-
 
 th::ng-deep .mat-sort-header-container {
  
   display:flex;
   justify-content:center;
+
 }
+
 .mat-cell
 {
    padding: 4px;
@@ -36,6 +41,8 @@ th::ng-deep .mat-sort-header-container {
    overflow-wrap: break-word;
    word-spacing: normal;
    word-break: break-word;
+   text-align: center;
+
 }
   .card
   {
@@ -44,3 +51,5 @@ th::ng-deep .mat-sort-header-container {
     margin-bottom: 20px;
 
   }
+
+ 

@@ -8,12 +8,12 @@ import { NotificationService } from 'src/app/notification.service';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.less']
-  // styles:[':host>>>.tooltip-inner {padding:10px;font-weight:500;}']
+  styleUrls: ['./question.component.less'],
+  styles:[':host>>>.tooltip-inner {padding:10px;font-weight:500;}']
 })
 export class QuestionComponent implements OnInit {
 
-  optionsTemplate: number;
+  optionsTemplateValue: number;
   questionEditFlag: boolean;
   questionKeyChange: number;
   categories: ICategory;
@@ -54,12 +54,15 @@ export class QuestionComponent implements OnInit {
   }
 
   ngOnInit() {
-    //Get categories from Questionservice class
-    this.questionservice.getCategories().subscribe(data => {
-      this.categories = data;
-    });
+    this.getCategories();
+    this.getTemplateType();
+    this.getOptionTemplate();
+    this.editQuestionInformation();
+  }
 
-    //for 4 option default push the formgroup in the formArray
+  get options() { return this.questionForm.get('options') as FormArray };
+
+  getOptionTemplate() {
     for (let i = 0; i < 4; i++) {
       this.options.push(this.formBuilder.group({
         optionKey: [0],
@@ -67,35 +70,11 @@ export class QuestionComponent implements OnInit {
         optionName: ['', [Validators.required]],
         isActive: [true, [Validators.required]]
       }));
-      console.log()
     }
-    // Observe Template change.
-    this.questionForm.controls.templateTypeKey.valueChanges.subscribe(x => {
-      this.optionsTemplate = x;
-      this.options.controls.filter(x => x.value.isAnswer ? x.value.isAnswer = false : x.value.isAnswer);
-
-    });
-
-    this.router.queryParams.subscribe(data => {
-      let questionKey = data.questionKey || 0;
-      this.questionKeyChange = questionKey;
-      if (questionKey != 0) {
-        this.questionEditFlag = true;
-        this.questionservice.getQuestionById(data.questionKey).subscribe(data => {
-          this.questionForm.patchValue(data);
-          console.log(data)
-        });
-      }
-      else {
-        this.questionEditFlag = false;
-      }
-    })
-
   }
 
-  get options() { return this.questionForm.get('options') as FormArray };
 
-  selectAnswer(formGroup: FormGroup) {
+  selectedAnswer(formGroup: FormGroup) {
     let TemplateType = this.questionForm.get('templateTypeKey').value;
 
     if (TemplateType == '1') {
@@ -107,36 +86,62 @@ export class QuestionComponent implements OnInit {
 
   }
 
-  questionFormSubmit() {
-    console.log("asdsad");
-    let isAnswer = this.options.controls.filter(x => x.value.isAnswer == true)
+  questionFormSubmited() {
+    let isAnswer = this.options.controls.filter(x => x.value.isAnswer == true);
     if (isAnswer.length != 0) {
-      this.AnswerError = true
       if (this.questionEditFlag) {
         this.questionservice.updateQuestion(this.questionKeyChange, this.questionForm.value).subscribe(data => {
           this.defaultpage();
           this.notify.statusFlag = true;
           this.notify.notificationMessage.next('updated successfully !!!');
-
         });
       }
       else {
         this.questionservice.createQuestion(this.questionForm.value).subscribe(data => {
           this.defaultpage();
-
           this.notify.statusFlag = true;
           this.notify.notificationMessage.next('created successfully !!!');
-
         });
       }
-
     }
     else {
       this.notify.statusFlag = false;
       this.notify.notificationMessage.next('Mark correct option!!!');
-
     }
 
+  }
+
+  editQuestionInformation() {
+    this.router.queryParams.subscribe(data => {
+      let questionKey = data.questionKey || 0;
+      this.questionKeyChange = questionKey;
+      if (questionKey != 0) {
+        this.questionEditFlag = true;
+        this.questionservice.getQuestionById(data.questionKey).subscribe(data => {
+          this.questionForm.patchValue(data);
+        });
+      }
+      else {
+        this.questionEditFlag = false;
+      }
+    });
+
+  }
+
+
+  getCategories() {
+    this.questionservice.getCategories().subscribe(data => {
+      this.categories = data;
+    });
+
+  }
+
+  getTemplateType() {
+    this.questionForm.controls.templateTypeKey.valueChanges.subscribe(templateKey => {
+      this.optionsTemplateValue = templateKey;
+      this.options.controls.filter(x => x.value.isAnswer ? x.value.isAnswer = false : x.value.isAnswer);
+
+    });
   }
 
   reset() {

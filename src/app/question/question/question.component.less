@@ -1,18 +1,36 @@
-@Error_color:red;
+
+@disabled_color:#BDBDBD;
 .row
 {
     padding: 10px 0px 10px 0px;
 }
 .input-group {
     padding: 10px;
+    justify-content: center;
 }
 
-.buttongroup > button {
-    margin-right: 20px !important;
-}
+
 .cancel-row
 {
     text-align: end;
 }
  
 
+button:disabled
+{
+    opacity: 0.65;
+    cursor: no-drop !important;
+    border:none !important;
+    background-color: @disabled_color !important;
+svg
+{
+    cursor: no-drop !important;
+}
+
+}
+
+.reset
+{
+    background-color: rgb(201, 74, 72);
+    border:#E53935;
+}

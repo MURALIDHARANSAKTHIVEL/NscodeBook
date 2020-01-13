@@ -12,7 +12,7 @@ export class NotificationService {
     this.notificationMessage.subscribe(message => {
       let barconfig = new MatSnackBarConfig();
       barconfig.duration = 2000;
-      barconfig.panelClass = this.statusFlag ? ['successNotify'] : ['errorNotify'];
+      barconfig.panelClass = this.statusFlag ? ['snack-success'] : ['snack-error'];
       barconfig.horizontalPosition = 'right';
       barconfig.verticalPosition = 'top';
       let actionElement = '';
