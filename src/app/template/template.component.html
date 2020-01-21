@@ -1,0 +1,96 @@
+<div class="container-fluid"><br>
+    <div class="row justify-content-center">
+        <div class="col-6 text-center">
+            <h2>Templates</h2>
+        </div>
+
+    </div>
+    <hr>
+    <br>
+    <div class="row">
+        <div class="col-6 col-md-6 col-sm-6 col-lg-6 ">
+            <div class="card">
+                <div class="card-header text-center" [tooltip]="template1" triggers="mouseenter:mouseleave">
+                    <h4 class="card-title">Template 1</h4>
+
+                    <ng-template #template1>
+                        <div>
+                            {{templateDetails[0]?.description}}
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="card-body">
+                    <div class="question">
+                        <h5>Example-Question</h5>
+                        <p class="card-text ">
+                            You want subclasses in any package to have access to members of a superclass. Which is the
+                            most
+                            restrictive access that accomplishes this objective?
+                        </p>
+                        <div class="card-text">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio1">public</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio2">private</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input"
+                                    checked>
+                                <label class="custom-control-label" for="customRadio3">protected</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
+                                <label class="custom-control-label" for="customRadio4">transient</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" col-6 col-md-6 col-sm-6 col-lg-6">
+            <div class="card">
+                <div class="card-header text-center" [tooltip]="template2" triggers="mouseenter:mouseleave">
+                    <h4 class="card-title">Template 2</h4>
+                    <ng-template #template2>
+                        <div>
+                            {{templateDetails[1]?.description}}
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="card-body">
+
+                    <div class="question">
+                        <h5>Example-Question</h5>
+                        <p class="card-text ">
+                            You want subclasses in any package to have access to members of a superclass. Which is the
+                            most
+                            restrictive access that accomplishes this objective?
+                        </p>
+                        <div class="card-text">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                                <label class="custom-control-label" for="customCheck1">public</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                                <label class="custom-control-label" for="customCheck1"> private</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">protected</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">transient</label>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

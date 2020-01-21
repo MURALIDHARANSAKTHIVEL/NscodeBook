@@ -5,18 +5,31 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationService } from './notification.service';
-import { MatSnackBarModule } from '@angular/material';
-
+import { MatSnackBarModule, MatSortModule, MatPaginatorModule, MatTableModule } from '@angular/material';
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import{NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { TemplateComponent } from './template/template.component'
+const material = [
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
+]
 @NgModule({
   declarations: [
     AppComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AngularSvgIconModule,
+    NgbModule,
+    material
+
+    
   ],
   providers: [NotificationService],
   bootstrap: [AppComponent]

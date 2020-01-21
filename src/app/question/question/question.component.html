@@ -22,7 +22,7 @@
 
             </div>
             <div class="col-sm-6 col-md-6 col-lg-6 category text-center">
-                <select class="form-control" formControlName="categoryKey">
+                <select class="form-control" formControlName="categoryKey" size="1">
                     <option value="">Category Type</option>
                     <option *ngFor="let category of categories" value="{{category.categoryKey}}">
                         {{category.description}}
@@ -35,7 +35,7 @@
         <div class="row question-block">
             <div class=" col-sm-12 col-md-12 col-lg-12 ">
                 <quill-editor [placeholder]="editorPlaceholder" [styles]="editorStyle" [modules]="editorModules"
-                    formControlName="description"></quill-editor>
+                    formControlName="question"></quill-editor>
             </div>
         </div>
         <div class="row answer-block justify-content-center">
@@ -65,7 +65,7 @@
         <div class="row  justify-content-center endpage">
             <div class="col-3">
                 <div class="buttongroup d-flex justify-content-center">
-                    <button class="btn btn-primary disable" type="submit" (click)="questionFormSubmited()"
+                    <button class="btn btn-primary" [class.button-disable]="questionForm.invalid" type="submit" (click)="questionFormSubmited()"
                         [disabled]="questionForm.invalid">submit</button>&nbsp;
                     <button class="btn btn-success reset" type="submit" (click)="reset()" tooltip="Full Form Reset">
                         <!-- <svg-icon src="assets\Icons\refresh.svg" (click)="navigateQuestionScreen(element.questionKey)">

@@ -10,20 +10,11 @@
 table{
   width: 100%;
   max-height: 400px;
-  table-layout: auto;
 }
 
 .status
 {
     color :@status;
-}
-.tableheadercell 
-{
-
-  vertical-align: middle !important;
-  text-align: center;
-  color: @tableheader;
- 
 }
 
 th::ng-deep .mat-sort-header-container {
@@ -33,7 +24,12 @@ th::ng-deep .mat-sort-header-container {
 
 }
 
-.mat-cell
+.mat-header-cell
+{
+  font-weight: 500;
+  color: black;
+}
+.mat-cell,.mat-header-cell 
 {
    padding: 4px;
    border-bottom-width: 1px;
@@ -41,15 +37,16 @@ th::ng-deep .mat-sort-header-container {
    overflow-wrap: break-word;
    word-spacing: normal;
    word-break: break-word;
+   width: 10%;
    text-align: center;
 
 }
-  .card
-  {
-    border: none;
-    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+  // .card
+  // {
+  //   border: none;
+  //   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+  //   margin-bottom: 20px;
 
-  }
+  // }
 
  

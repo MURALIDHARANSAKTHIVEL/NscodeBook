@@ -41,7 +41,7 @@ export class QuestionComponent implements OnInit {
 
       templateTypeKey: ['', [Validators.required, Validators.min(1)]],
       categoryKey: ['', [Validators.required, Validators.min(1)]],
-      description: [, [Validators.required]],
+      question: [, [Validators.required]],
       IsActive: [true, [Validators.required]],
       options: this.formBuilder.array([
 

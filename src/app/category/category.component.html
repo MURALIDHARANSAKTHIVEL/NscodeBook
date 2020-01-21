@@ -1,0 +1,98 @@
+<ng-template #categorytemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Category Details</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="categoryModelRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div style="color: red;"> {{errorMessage}} </div>
+        <form [formGroup]="categoryForm">
+
+            <div class="form-group">
+                <label for="CategoryName">Category Name</label>
+                <input type="text" class="form-control input-lg" id="CategoryName" placeholder="Category Name"
+                    formControlName="categoryName">
+            </div>
+            <div class="form-group">
+                <label for="ShortName">ShortName</label>
+                <input type="text" class="form-control input-lg " id="ShortName" placeholder="Short Name"
+                    formControlName="shortName">
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <input type="text" class="form-control input-lg" id="Description" placeholder="Description"
+                    formControlName="description">
+            </div>
+            <div class="form-group text-center">
+                <button class="btn btn-primary" [class.button-disable]="categoryForm.invalid"
+                    [disabled]="categoryForm.invalid" (click)="saveCategory()">submit</button>
+            </div>
+
+        </form>
+    </div>
+   
+</ng-template>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" class="btn btn-primary" (click)="openModel(categorytemplate)">
+                <svg-icon src="assets\Icons\plus.svg" style="fill: white;vertical-align: text-bottom;"></svg-icon>
+                <span> CREATE CATEGORY</span>
+            </button>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+
+            <table mat-table [dataSource]="categoryDataSource">
+                <ng-container matColumnDef="No">
+                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                    <td mat-cell *matCellDef="let element,let i= index"> {{i+1}} </td>
+                </ng-container>
+                <ng-container matColumnDef="shortName">
+                    <th mat-header-cell *matHeaderCellDef>Short Name </th>
+                    <td mat-cell *matCellDef="let element,let i= index"> {{element.shortName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="categoryName">
+                    <th mat-header-cell *matHeaderCellDef>Category Name </th>
+                    <td mat-cell *matCellDef="let element,let i= index"> {{element.categoryName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef> DESCRIPTION
+                    </th>
+                    <td mat-cell *matCellDef="let element,let i= index" style="text-align: left;"> <span [innerHTML]="element.description"></span>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Edit">
+                    <th mat-header-cell *matHeaderCellDef> EDIT</th>
+                    <td mat-cell *matCellDef="let element,let i= index">
+                        <svg-icon src="assets\Icons\edit.svg" (click)="editCategory(element.categoryKey)"></svg-icon>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="Status">
+                    <th mat-header-cell *matHeaderCellDef>
+                        STATUS</th>
+                    <td mat-cell *matCellDef="let element,let i= index"> <button class="btn  btn-link status"
+                            (click)="element.isActive=!element.isActive" (click)="statusChange(element,element.categoryKey)">{{element.isActive?'Active':'Inactive'}}</button>
+                    </td>
+                </ng-container>
+
+
+
+
+                <tr mat-header-row *matHeaderRowDef="categoryDataSourceColumn"></tr>
+                <tr mat-row *matRowDef="let row; columns: categoryDataSourceColumn;">
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+
+    </div>
+
+</div>
