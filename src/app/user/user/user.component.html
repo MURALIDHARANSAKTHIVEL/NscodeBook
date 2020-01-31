@@ -1,0 +1,113 @@
+<div class="continer-fuild">
+    <form [formGroup]="userForm">
+        <div class="row justify-content-end">
+            <div class="col-4 cancel-row">
+                <button class="btn btn-danger" (click)="defaultpage()">Cancel</button>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="row user-image-row text-center">
+                    <div class="col-12 user-image-col">
+                        <img class="img-circle " [src]="imageUrl" />
+                    </div><br>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="FirstName"
+                        [class.invalidField]="userForm.controls['firstName'].invalid && (userForm.controls['firstName'].touched || userForm.controls['firstName'].dirty ) ">First
+                        Name</label><em>* </em>
+                    <input type="text" class="form-control input-lg" id="FirstName" placeholder="FirstName"
+                        formControlName="firstName">
+                </div>
+
+                <div class="form-group">
+                    <label for="UserName"
+                        [class.invalidField]="userForm.controls['userName'].invalid && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty ) ">User
+                        Name</label><em>* &nbsp; {{userNameExists?.message}}</em>
+                    <input type="text" class="form-control input-lg" id="UserName" placeholder="UserName"
+                        formControlName="userName" (focusout)="userNameExist($event)">
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="E-mail"
+                        [class.invalidField]="userForm.controls['email'].invalid && (userForm.controls['email'].touched || userForm.controls['email'].dirty ) ">E-mail</label><em>*</em>
+                    <input  type="email" class="form-control input-lg"
+                        id="E-mail" placeholder="E-mail" formControlName="email" email=true>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="gendergroup"
+                        [class.invalidField]="userForm.controls['genderTypeKey'].invalid && (userForm.controls['genderTypeKey'].touched || userForm.controls['genderTypeKey'].dirty )">Gender</label><em>*</em>
+                    <select class="form-control" formControlName="genderTypeKey" size="1">
+                        <option value=""> --Select one Gender--</option>
+                        <option *ngFor="let gender of genderList" value="{{gender.genderTypeKey}}">
+                            {{gender.genderType}}
+                        </option>
+                    </select>
+
+                </div>
+
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="LastName"
+                        [class.invalidField]="userForm.controls['lastName'].invalid && (userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty )">Last
+                        Name</label><em>*</em>
+                    <input type="text" class="form-control input-lg" id="LastName" placeholder="LastName"
+                        formControlName="lastName">
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNumber"
+                        [class.invalidField]="userForm.controls['phoneNumber'].invalid && (userForm.controls['phoneNumber'].touched || userForm.controls['phoneNumber'].dirty ) ">Phone
+                        Number</label><em>*</em>
+                    <input type="text" class="form-control input-lg" id="PhoneNumber" placeholder="PhoneNumber"
+                        formControlName="phoneNumber">
+                </div>
+
+                <div class="form-group">
+                    <label for="gendergroup"
+                        [class.invalidField]="userForm.controls['roleKey'].invalid && (userForm.controls['roleKey'].touched || userForm.controls['roleKey'].dirty )">Role</label><em>*</em>
+                    <select class="form-control" formControlName="roleKey" size="1">
+                        <option value=""> --Select one Role--</option>
+                        <option *ngFor="let role of rolesList" value="{{role.roleKey}}">
+                            {{role.roleName}}
+                        </option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+
+                    <input type="file" #uploadimage accept=".png, .jpg, .jpeg" style="display: none;"
+                        (change)="onImageChange($event)">
+
+                    <label for="UploadImage">Profile Image Upload</label><br>
+                    <input type="button" class="btn btn-secondary " id="UploadImage" value="Upload File"
+                        (click)="uploadimage.click()">
+
+                </div>
+            </div>
+
+        </div>
+        <div class="row  justify-content-center">
+            <div class="col-8">
+                <div class="buttongroup d-flex justify-content-center">
+                    <button class="btn btn-primary" [class.button-disable]="userForm.invalid || userNameExists?.isExist"
+                        [disabled]="userForm.invalid || userNameExists?.isExist" (click)="onSubmitUserForm()">submit</button>&nbsp;&nbsp;
+                    <button class="btn btn-success reset" type="submit" (click)="reset()" tooltip="Full Form Reset">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

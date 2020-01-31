@@ -15,8 +15,6 @@ templateDetails:Object[]=[];
 
     this.templateservice.getTemplate().subscribe(data => {
     this.templateDetails=data;
-
-      console.log(this.templateDetails);
     })
   }
 

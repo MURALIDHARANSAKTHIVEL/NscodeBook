@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
-import { ICategory } from '../categoryInterface';
+import { ICategory, ITemplate } from '../categoryInterface';
 import { QuestionService } from '../question.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/notification.service';
@@ -9,7 +9,7 @@ import { NotificationService } from 'src/app/notification.service';
   selector: 'app-question',
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.less'],
-  styles:[':host>>>.tooltip-inner {padding:10px;font-weight:500;}']
+  styles: [':host>>>.tooltip-inner {padding:10px;font-weight:500;}']
 })
 export class QuestionComponent implements OnInit {
 
@@ -17,6 +17,7 @@ export class QuestionComponent implements OnInit {
   questionEditFlag: boolean;
   questionKeyChange: number;
   categories: ICategory;
+  templates: ITemplate;
   AnswerError: boolean = true;
   editorPlaceholder = "Type Question here!!!!";
   editorStyle = {
@@ -55,6 +56,7 @@ export class QuestionComponent implements OnInit {
 
   ngOnInit() {
     this.getCategories();
+    this.getTemplate();
     this.getTemplateType();
     this.getOptionTemplate();
     this.editQuestionInformation();
@@ -74,9 +76,8 @@ export class QuestionComponent implements OnInit {
   }
 
 
-  selectedAnswer(formGroup: FormGroup) {
+  clickOption(formGroup: FormGroup) {
     let TemplateType = this.questionForm.get('templateTypeKey').value;
-
     if (TemplateType == '1') {
       this.options.controls.filter(x => x == formGroup ? x.value.isAnswer = true : x.value.isAnswer = false);
     }
@@ -136,6 +137,11 @@ export class QuestionComponent implements OnInit {
 
   }
 
+  getTemplate() {
+    this.questionservice.getTemplate().subscribe(data => {
+      this.templates = data;
+    })
+  }
   getTemplateType() {
     this.questionForm.controls.templateTypeKey.valueChanges.subscribe(templateKey => {
       this.optionsTemplateValue = templateKey;

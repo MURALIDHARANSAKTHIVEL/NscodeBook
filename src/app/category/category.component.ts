@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from './category.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
@@ -17,8 +17,8 @@ export class CategoryComponent implements OnInit {
   @ViewChild('categorytemplate', { static: true }) categorytemplate;
   editCategoryFlag: boolean = false;
   editCategoryKey: number;
-  errorMessage:string;
-  
+  errorMessage: string;
+
   ngOnInit() {
 
     this.getCategory();
@@ -27,7 +27,8 @@ export class CategoryComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   categoryModelRef: BsModalRef;
-  categoryDataSourceColumn: string[] = ["No", "categoryName","description", "shortName",  "Edit", "Status"]
+  categoryTemplateConfig: ModalOptions = { class: 'modal-dialog-centered' }
+  categoryDataSourceColumn: string[] = ["No", "categoryName", "description", "shortName", "Edit", "Status"]
   categoryDataSource = new MatTableDataSource();
 
   categoryForm: FormGroup = this.formbulider.group({
@@ -41,7 +42,7 @@ export class CategoryComponent implements OnInit {
 
   openModel(template: TemplateRef<any>) {
     this.categoryForm.reset({ categoryKey: 0, isActive: true });
-    this.categoryModelRef = this.modelservice.show(template);
+    this.categoryModelRef = this.modelservice.show(template, this.categoryTemplateConfig);
   }
 
   saveCategory() {
@@ -56,7 +57,7 @@ export class CategoryComponent implements OnInit {
         this.notification.notificationMessage.next(notificationMessage);
 
       }, errors => {
-        this.errorMessage=errors.error['message'];
+        this.errorMessage = errors.error['message'];
       }
       )
     }
@@ -69,7 +70,7 @@ export class CategoryComponent implements OnInit {
         this.categoryModelRef.hide();
         this.notification.notificationMessage.next(notificationMessage);
       }, errors => {
-        this.errorMessage=errors.error['message'];
+        this.errorMessage = errors.error['message'];
       });
     }
 

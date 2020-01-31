@@ -12,7 +12,7 @@ import { NotificationService } from 'src/app/notification.service';
 })
 export class QuestionDetailsComponent implements OnInit {
 
-  questionsDataSourceColumn: string[] = ["No", "Description", "templateTypeKey", "categoryKey", "Edit", "isActive"];
+  questionsDataSourceColumn: string[] = ["No", "Description", "templateType", "categoryName", "Edit", "isActive"];
   questionsDataSource = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -40,7 +40,7 @@ export class QuestionDetailsComponent implements OnInit {
 
 
   statusOnChange(questionKey: number, changeData: any) {
-    changeData.options = [{ 'optionKey': 1, 'questionKey': 3, 'optionName': 'synchronous', 'isAnswer': true, 'isActive': true }, { 'optionKey': 2, 'questionKey': 3, 'optionName': 'synch', 'isAnswer': true, 'isActive': false }, { 'optionKey': 3, 'questionKey': 3, 'optionName': 'hronous', 'isAnswer': false, 'isActive': true }, { 'optionKey': 4, 'questionKey': 3, 'optionName': 'chronous', 'isAnswer': false, 'isActive': true }];
+    changeData.options = [];
 
     this.questionservice.updateQuestion(questionKey, changeData).subscribe(data => {
       this.notify.statusFlag = true;

@@ -3,4 +3,10 @@ export interface ICategory {
     description?: string;
     IsActive?: boolean;
 }
+export interface ITemplate {
+    TemplateTypeKey?: number;
+    description?: string;
+    IsActive?: boolean;
+    TemplateType?:string;
+}
 

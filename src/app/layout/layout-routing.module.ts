@@ -12,6 +12,7 @@ children:[
 {path:'',loadChildren:()=>import('../test/test.module').then(m=>m.TestModule)},
 {path:'',loadChildren:()=>import('../question/question.module').then(m=>m.QuestionModule)},
 {path:'',loadChildren:()=>import('../role/role.module').then(m=>m.RoleModule)},
+{path:'',loadChildren:()=> import('../user/user.module').then(m=>m.UserModule)},
 {path:'category',component:CategoryComponent},
 {path:'template',component:TemplateComponent},
 

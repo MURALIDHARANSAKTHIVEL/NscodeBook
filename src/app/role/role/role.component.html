@@ -1,1 +1,127 @@
-<p>role works!</p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-xs-12">
+            <button type="button" class="btn btn-primary" (click)="createRole()">
+                <svg-icon src="assets\Icons\plus.svg" style="fill: white;vertical-align: text-bottom;"></svg-icon>
+                <span>CREATE ROLE</span>
+            </button>
+            <hr>
+        </div>
+
+    </div>
+    <div class="row">
+    <div class="col-12">
+        <table mat-table [dataSource]="roleDataSource">
+
+            <ng-container matColumnDef="No">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element,let i= index"> {{i+1}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="RoleName">
+                <th mat-header-cell *matHeaderCellDef> Role Name </th>
+                <td mat-cell *matCellDef="let element,let i= index"> {{element.roleName}} </td>
+            </ng-container>
+            <ng-container matColumnDef="Edit">
+                <th mat-header-cell *matHeaderCellDef> Edit </th>
+                <td mat-cell *matCellDef="let element,let i= index">
+                    <svg-icon src="assets\Icons\edit.svg" (click)="EditRole(element.roleKey)"></svg-icon>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef>
+                    STATUS</th>
+                <td mat-cell *matCellDef="let element,let i= index"> <button class="btn  btn-link status"
+                        (click)="element.isActive=!element.isActive"
+                        (click)="statusChange(element,element.roleKey)">{{element.isActive?'Active':'Inactive'}}</button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="roleDataSourceColumn"></tr>
+            <tr mat-row *matRowDef="let row; columns: roleDataSourceColumn;">
+            </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>
+</div>
+<ng-template #roleTemplate>
+    <div class="modal-header">
+        <h4 class="modal-title">Role Details</h4>
+        <!-- <button class="btn btn-danger" style="margin-left: auto;"
+            [class.button-disable]="(roleForm.value?.roleKey==null)?true:false"
+            [disabled]="(roleForm.value?.roleKey==null)?true:false" (click)="nonEditFormAccess=!nonEditFormAccess"
+            tooltip="{{(nonEditFormAccess)?'Click Edit-Access':'Disable Edit-Access '}}"
+            triggers="mouseenter:mouseleave">Edit</button> -->
+        <button type="button" class="close pull-right" aria-label="Close pull-right" (click)="roleTemplateRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" [class.nonEditFormAccess]="nonEditFormAccess">
+        <div class="container-fluid">
+            <form [formGroup]="roleForm">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label for="CategoryName">Role Name</label>
+                            <input type="text" class="form-control input-lg" id="RoleName" placeholder="Role Name"
+                                formControlName="roleName">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" formArrayName="permissionType">
+                    <div class="col-12"><label>Permissions</label></div>
+
+
+                    <div class="col-3" *ngFor=" let data of permissions.controls, let i=index, ">
+                        <div [formGroupName]="i">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input"
+                                    [attr.id]="data.value.permissionTypeKey"
+                                    (change)="data.value.isActive=!data.value.isActive" [checked]="data.value.isActive">
+                                <label class="custom-control-label"
+                                    [attr.for]="data.value.permissionTypeKey">{{data.value.permissionType}}</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="col-6">
+                        <div *ngFor=" let data of permissions.controls, let i=index, ">
+                            <div *ngIf="(i < (permissionCount/2)-1)?true:false" [formGroupName]="i" class="permissions">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input"
+                                        [attr.id]="data.value.permissionTypeKey"
+                                        (change)="data.value.isActive=!data.value.isActive"
+                                        [checked]="data.value.isActive">
+                                    <label class="custom-control-label"
+                                        [attr.for]="data.value.permissionTypeKey">{{data.value.permissionType}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div *ngFor=" let data of permissions.controls, let i=index" class="permissions">
+                            <div *ngIf="(i >(permissionCount/2)-1)?true:false" [formGroupName]="i">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input"
+                                        [attr.id]="data.value.permissionTypeKey"
+                                        (change)="data.value.isActive=!data.value.isActive"
+                                        [checked]="data.value.isActive">
+                                    <label class="custom-control-label"
+                                        [attr.for]="data.value.permissionTypeKey">{{data.value.permissionType}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary" [class.button-disable]="roleForm.invalid"
+                            [disabled]="roleForm.invalid" (click)="saveRole(roleForm.value?.roleKey)">submit</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>

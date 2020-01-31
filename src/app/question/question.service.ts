@@ -16,6 +16,9 @@ export class QuestionService {
     return this.http.get(this.baseUrl + "categories");
 
   }
+  public getTemplate(): Observable<any> {
+    return this.http.get(this.baseUrl + "templates");
+  }
   public createQuestion(questionForm: any): Observable<any> {
 
     return this.http.post(this.baseUrl + "questions", questionForm);
@@ -25,17 +28,15 @@ export class QuestionService {
 
     return this.http.get(this.baseUrl + "questions");
   }
-public getQuestionById(questionId:number):Observable<any>
-{
+  public getQuestionById(questionId: number): Observable<any> {
 
-  return this.http.get(this.baseUrl+"questions/"+questionId);
-}
+    return this.http.get(this.baseUrl + "questions/" + questionId);
+  }
 
-public updateQuestion(questionId:number,changeData:any):Observable<any>
-{
+  public updateQuestion(questionId: number, changeData: any): Observable<any> {
 
-  return this.http.put(this.baseUrl+"questions/"+questionId,changeData);
-}
+    return this.http.put(this.baseUrl + "questions/" + questionId, changeData);
+  }
 }
 
 

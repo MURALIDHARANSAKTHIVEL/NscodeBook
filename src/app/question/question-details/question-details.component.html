@@ -32,14 +32,14 @@
                             <th mat-header-cell *matHeaderCellDef > No. </th>
                             <td mat-cell *matCellDef="let element,let i= index"> {{i+1}} </td>
                         </ng-container>
-                        <ng-container matColumnDef="templateTypeKey">
+                        <ng-container matColumnDef="templateType">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header > TEMPLATE
                             </th>
-                            <td mat-cell *matCellDef="let element,let i= index"> {{element.templateTypeKey}} </td>
+                            <td mat-cell *matCellDef="let element,let i= index"> {{element.templateType}} </td>
                         </ng-container>
-                        <ng-container matColumnDef="categoryKey">
+                        <ng-container matColumnDef="categoryName" class="medium-header-cell">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header >CATEGORY </th>
-                            <td mat-cell *matCellDef="let element,let i= index"> {{element.categoryKey}} </td>
+                            <td mat-cell *matCellDef="let element,let i= index"> {{element.categoryName}} </td>
                         </ng-container>
                         <ng-container matColumnDef="Description">
                             <th mat-header-cell *matHeaderCellDef  class="large-header-cell" > QUESTION
