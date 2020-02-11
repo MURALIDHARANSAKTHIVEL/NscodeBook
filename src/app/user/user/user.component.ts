@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { UserService } from '../user.service';
-import { formatDate } from '@angular/common';
 import { NotificationService } from 'src/app/notification.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { subtract } from 'ngx-bootstrap/chronos/public_api';
 
 @Component({
   selector: 'app-user',
@@ -19,7 +17,7 @@ export class UserComponent implements OnInit {
   serviceBaseUrl = 'http://localhost:5000/ProfileImages/';
   defaultUserImage: string = "defaultUserImage.png";
   userKeyFlag: number;
-  userNameExists: object = { message: '', isExist: false };
+  userNameExists: object = { message: '', isExist: true, checkavailability: true };
   constructor(private formBuilder: FormBuilder, private userservice: UserService,
     private notification: NotificationService, private router: ActivatedRoute,
     private route: Router) { }
@@ -27,8 +25,20 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.getRoles();
     this.getGenders();
+
     this.userEditInformation();
     this.imageUrl = this.serviceBaseUrl + this.defaultUserImage;
+
+    this.userForm.controls['userName'].valueChanges.subscribe(value => {
+      if (value == '') {
+        this.userNameExists['checkavailability'] = true;
+      }
+      else {
+        this.userNameExists['checkavailability'] = false;
+      }
+      this.userNameExists['isExist'] = true;
+      this.userNameExists['message'] = "";
+    })
   }
 
   userForm: FormGroup = this.formBuilder.group({
@@ -90,40 +100,42 @@ export class UserComponent implements OnInit {
         this.notification.statusFlag = true;
         this.notification.notificationMessage.next("created successfully");
 
+      }, error => {
+
+        this.notification.statusFlag = false;
+        this.notification.notificationMessage.next(error.error.message)
       });
     }
 
   }
-  userNameExist(event) {
-    const userName = event.target.value || null;
-    if (userName != null) {
-      this.userservice.getUsersByUserName(this.userForm.value.userName).subscribe(data => {
-        if (data.isExist == true) {
-          this.userNameExists['message'] = "UserName Already Exists";
-          this.userNameExists['isExist'] = true;
-        }
-        else {
-          this.userNameExists['message'] = "";
-          this.userNameExists['isExist'] = false;
+  userNameExistCheck() {
+    this.userservice.getUsersByUserName(this.userForm.value.userName).subscribe(data => {
+      if (data.isExist == true) {
+        this.userNameExists['message'] = "That userName is Taken. Try another";
+        this.userNameExists['isExist'] = true;
+      }
+      else {
+        this.userNameExists['message'] = "That userName is available";
+        this.userNameExists['isExist'] = false;
+      }
+      this.userNameExists['checkavailability'] = true;
+    });
 
-        }
-      });
-    }
-    else {
-      this.userNameExists['message'] = "";
-      this.userNameExists['isExist'] = true;
-    }
+
   }
 
   userEditInformation() {
     this.router.queryParams.subscribe(data => {
-
       let userKey = data.userKey || 0;
       this.userKeyFlag = userKey;
       if (userKey != 0) {
+
         this.userservice.getUsersById(data.userKey).subscribe(data => {
           this.userForm.patchValue(data);
           this.userForm.get('userName').disable();
+          this.userNameExists['checkavailability'] = true;
+          this.userNameExists['show'] = true;
+          this.userNameExists['isExist'] = false;
           this.imageUrl = this.serviceBaseUrl + (data.profileImage || this.defaultUserImage);
         })
       }
@@ -131,7 +143,13 @@ export class UserComponent implements OnInit {
   }
 
   reset() {
-    this.userForm.reset({ userName: this.userForm.get('userName').value, isActive: true, genderTypeKey: '', roleKey: '' });
+    if (this.userForm.get('userKey').value == null) {
+      this.userForm.reset({ isActive: true, genderTypeKey: '', roleKey: '' });
+      this.userNameExists['checkavailability'] = true;
+    }
+    else {
+      this.userForm.reset({ userName: this.userForm.get('userName').value, isActive: true, genderTypeKey: '', roleKey: '' });
+    }
   }
 
   defaultpage() {

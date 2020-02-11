@@ -14,17 +14,17 @@ export class CategoryService {
 
     return this.http.post(this.baseUrl + "categories", categoryForm);
   }
-  public getCategory(): Observable<any> {
-    return this.http.get(this.baseUrl + "categories");
+  public getCategory(filterForm?: any): Observable<any> {
+    return this.http.get(this.baseUrl + "categories", { params: filterForm });
   }
 
-  public getCategoryById(categoryId:number): Observable<any> {
-    return this.http.get(this.baseUrl + "categories/"+categoryId);
+  public getCategoryById(categoryId: number): Observable<any> {
+    return this.http.get(this.baseUrl + "categories/" + categoryId);
   }
 
-  public updateCategory(categoryId:number,categoryForm: any):Observable<any>
-  {
-return this.http.put(this.baseUrl+"categories/"+categoryId,categoryForm);
+  public updateCategory(categoryId: number, categoryForm: any): Observable<any> {
+    return this.http.put(this.baseUrl + "categories/" + categoryId, categoryForm);
 
   }
+
 }

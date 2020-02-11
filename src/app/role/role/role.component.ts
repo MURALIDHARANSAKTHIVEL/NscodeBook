@@ -24,7 +24,6 @@ export class RoleComponent implements OnInit {
     this.getRoles();
     this.getAllPermissions();
   }
-
   roleDataSourceColumn: string[] = ["No", "RoleName", "Edit", "Status"];
   roleDataSource = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -33,9 +32,6 @@ export class RoleComponent implements OnInit {
   roleTemplateConfig: ModalOptions = { class: 'modal-lg modal-dialog-centered' }
   permissionCount: number;
   globalPermissions: FormArray;
-
-  // nonEditFormAccess: boolean = false;
-
   roleForm: FormGroup = this.formbuilder.group({
     roleKey: [],
     roleName: [, [Validators.required]],
@@ -45,17 +41,26 @@ export class RoleComponent implements OnInit {
 
   });
 
-  getRoles() {
+  getRoles(filterForm?: object) {
 
-    this.roleService.getRoles().subscribe(data => {
-      this.roleDataSource.data = data;
-      this.roleDataSource.paginator = this.paginator;
+    this.roleService.getRoles(filterForm || '').subscribe(data => {
+      if (data == null) {
+        this.roleDataSource.data = [];
+        this.roleDataSource.paginator = this.paginator;
+
+      }
+      else {
+
+        this.roleDataSource.data = data;
+        this.paginator.firstPage();
+        this.roleDataSource.paginator = this.paginator;
+      }
+
     });
   }
 
   createRole() {
     this.roleForm.reset({ isActive: true, permissionType: this.globalPermissions });
-    // this.nonEditFormAccess = false;
     this.roleTemplateRef = this.modelservice.show(this.roleTemplate, this.roleTemplateConfig);
   }
 
@@ -84,15 +89,20 @@ export class RoleComponent implements OnInit {
   }
 
   getPermissionByRoleId(roleKey: number) {
-    this.roleService.getPermissionsByRole(roleKey).subscribe(data => {
-      this.roleForm.get('permissionType').patchValue(data);
-    });
+    if (roleKey != null) {
+      this.roleService.getPermissionsByRole(roleKey).subscribe(data => {
+        this.roleForm.get('permissionType').patchValue(data);
+      });
+    }
+
 
   }
   getRoleById(roleKey: number) {
+    if (roleKey != null) {
     this.roleService.getRoleById(roleKey).subscribe(data => {
       this.roleForm.patchValue(data);
     });
+  }
   }
 
   EditRole(roleKey: number) {

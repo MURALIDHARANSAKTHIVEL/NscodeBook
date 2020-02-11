@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionService } from '../question.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { NotificationService } from 'src/app/notification.service';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-question-details',
@@ -14,6 +14,7 @@ export class QuestionDetailsComponent implements OnInit {
 
   questionsDataSourceColumn: string[] = ["No", "Description", "templateType", "categoryName", "Edit", "isActive"];
   questionsDataSource = new MatTableDataSource();
+  filterKeyObject: Object = [{ filterkey: 1, filterName: 'Template' }, { filterkey: 2, filterName: 'Category' }]
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -25,11 +26,19 @@ export class QuestionDetailsComponent implements OnInit {
     this.getQuestions();
   }
 
-  getQuestions(): void {
-    this.questionservice.getQuestion().subscribe(data => {
-      this.questionsDataSource.data = data;
-      this.questionsDataSource.paginator = this.paginator;
-      this.questionsDataSource.sort = this.sort;
+ 
+  getQuestions(FilterForm?: object): void {
+    this.questionservice.getQuestion(FilterForm || '').subscribe(data => {
+
+      if (data.length == 0) {
+        this.questionsDataSource.data = [];
+        this.questionsDataSource.paginator = this.paginator;
+      }
+      else {
+        this.questionsDataSource.data = data;
+        this.paginator.firstPage();
+        this.questionsDataSource.paginator = this.paginator;
+      }
     });
   }
 

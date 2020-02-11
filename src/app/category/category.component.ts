@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from './category.service';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { NotificationService } from '../notification.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-category',
@@ -11,6 +12,7 @@ import { NotificationService } from '../notification.service';
   styleUrls: ['./category.component.less']
 })
 export class CategoryComponent implements OnInit {
+  dataNotFound: boolean;
 
   constructor(private modelservice: BsModalService, private formbulider: FormBuilder,
     private categoryservice: CategoryService, private notification: NotificationService) { }
@@ -41,6 +43,7 @@ export class CategoryComponent implements OnInit {
   })
 
   openModel(template: TemplateRef<any>) {
+    this.errorMessage = "";
     this.categoryForm.reset({ categoryKey: 0, isActive: true });
     this.categoryModelRef = this.modelservice.show(template, this.categoryTemplateConfig);
   }
@@ -76,11 +79,20 @@ export class CategoryComponent implements OnInit {
 
   }
 
-  getCategory() {
-    this.categoryservice.getCategory().subscribe(data => {
-      this.categoryDataSource.data = data;
-      this.categoryDataSource.paginator = this.paginator;
-      this.categoryDataSource.sort = this.sort;
+
+
+  getCategory(filterData?: object) {
+    this.categoryservice.getCategory(filterData || '').subscribe(data => {
+      if (data == null) {
+        this.categoryDataSource.data = [];
+        this.categoryDataSource.paginator = this.paginator;
+
+      }
+      else {
+        this.categoryDataSource.data = data;
+        this.paginator.firstPage();
+        this.categoryDataSource.paginator = this.paginator;
+      }
     })
   }
 

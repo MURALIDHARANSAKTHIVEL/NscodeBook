@@ -3,13 +3,56 @@
         <div class="col-12 col-sm-12 col-xs-12">
             <button type="button" class="btn btn-primary" (click)="navigateUserscreen()">
                 <svg-icon src="assets\Icons\plus.svg" style="fill: white;vertical-align: text-bottom;"></svg-icon>
-                <span>CREATE USER</span>
+                <span>&nbsp;CREATE USER</span>
             </button>
             <hr>
         </div>
 
     </div>
 
+    <app-filter-data [filterKeyObject]="filterKeyObject" (filterKeysearch)="getUsers($event)">
+    </app-filter-data>
+
+
+
+    <!-- <form [formGroup]="filterForm">
+        <div class="d-flex filtergroup ">
+
+            <div class="filterKeydropdown">
+                <select class="form-control" size="1" formControlName="filterKey">
+                    <option value=''> --Select one filterkey--</option>
+                    <option value="1"> UserName</option>
+                    <option value="2">Role</option>
+                    <option value="3">Email</option>
+                </select>
+            </div>&nbsp;&nbsp;
+            <div class="statusKeydropdown">
+                <select class="form-control" size="1" formControlName="statusKey">
+                    <option value=''> --Select one statusKey--</option>
+                    <option value="1"> Active</option>
+                    <option value="0">InActive</option>
+                </select>
+            </div>&nbsp;&nbsp;
+            <div class="searchKey">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <input type="text" placeholder="filter here....." class="form-control"
+                            formControlName="searchKey" />
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="filterUserData()">
+                        <svg-icon src="assets\Icons\research.svg"></svg-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div class="filterreset" (click)="getUsers()">
+                <button type="button" class="btn btn-danger">reset All</button>
+
+            </div>
+
+
+        </div>
+    </form> -->
     <div class="row">
         <div class="col-12">
 
@@ -67,6 +110,10 @@
                 <tr mat-row *matRowDef="let row; columns: userDataSourceColumn;">
                 </tr>
             </table>
+
+            <app-table-data-not-found [TableDataNotFound]="userDataSource.data.length?true:false">
+            </app-table-data-not-found>
+
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
 

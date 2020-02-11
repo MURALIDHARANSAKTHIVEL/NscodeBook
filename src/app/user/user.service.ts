@@ -24,8 +24,8 @@ export class UserService {
   }
 
 
-  public getUsers(): Observable<any> {
-    return this.http.get(this.baseUrl + "users");
+  public getUsers(filterForm?: any): Observable<any> {
+    return this.http.get(this.baseUrl + "users", { params: filterForm });
   }
   public getUsersById(userKey: number): Observable<any> {
     console.log(userKey)

@@ -12,9 +12,9 @@ export class RoleService {
   baseUrl = "http://localhost:5000/api/";
 
 
-  public getRoles(): Observable<any> {
+  public getRoles(filterForm?: any): Observable<any> {
 
-    return this.http.get(this.baseUrl + "roles");
+    return this.http.get(this.baseUrl + "roles", { params: filterForm });
   }
 
   public getPermissions(): Observable<any> {

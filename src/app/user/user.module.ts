@@ -9,6 +9,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { MatIconModule, MatButtonModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { ModalModule, TooltipModule } from 'ngx-bootstrap';
+import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
 
 const material = [
   MatIconModule,
@@ -34,7 +35,8 @@ const ngxBootstrap = [
     HttpClientModule,
     AngularSvgIconModule.forRoot(),
     material,
-    ngxBootstrap
+    ngxBootstrap,
+    SharedmoduleModule
   ]
 })
 export class UserModule { }

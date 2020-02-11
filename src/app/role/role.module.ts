@@ -9,6 +9,7 @@ import {
 } from '@angular/material';
 import { ModalModule, TooltipModule } from 'ngx-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
 
 const material = [
   MatIconModule,
@@ -33,7 +34,8 @@ const ngxBootstrap = [
     ReactiveFormsModule,
     AngularSvgIconModule.forRoot(),
     material,
-   ngxBootstrap
+   ngxBootstrap,
+   SharedmoduleModule
   ]
 })
 export class RoleModule { }

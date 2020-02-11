@@ -1,0 +1,53 @@
+<div class="searchfilter">
+    <form [formGroup]="filterForm">
+        <div class="d-flex filtergroup ">
+
+            <div class="filterKeydropdown" [hidden]="filterKeyObject?.length==0">
+                <select class="form-control" size="1" formControlName="filterKey">
+                    <option value=''> Choose Attributes </option>
+                    <option *ngFor="let filterkey of filterKeyObject " value="{{filterkey.filterkey}}">
+                        {{filterkey.filterName}}</option>
+                </select>
+            </div>&nbsp;&nbsp;
+
+            <!-- <div class="secondaryfilterObject" [hidden]="secondaryfilterObject?.length==0">
+            <select class="form-control" size="1" formControlName="searchKey">
+                <option value=''>  Choose Sub-Attributes  </option>
+                <option *ngFor="let secondarykey of secondaryfilterObject "
+                    value="{{(secondarykey?.categoryName)?(secondarykey?.categoryName):(secondarykey?.templateType)}}">
+                    {{(secondarykey?.categoryName)?(secondarykey?.categoryName):(secondarykey?.templateType)}}
+                </option>
+            </select>
+        </div>&nbsp;&nbsp; -->
+
+            <div class="statusKeydropdown">
+                <select class="form-control" size="1" formControlName="statusKey">
+                    <option value=''>Status</option>
+                    <option value="1"> Active</option>
+                    <option value="0">InActive</option>
+                </select>
+            </div>&nbsp;&nbsp;
+
+            <div class="searchKey">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <input type="text" placeholder="SearchKey....." class="form-control"
+                            formControlName="searchKey" />
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="filterData()">
+                        <svg-icon src="assets\Icons\research.svg"></svg-icon>
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="filtersearch" (click)="filterData()" [hidden]="secondaryfilterObject?.length==0">
+            <button type="button" class="btn btn-primary">Search</button>
+
+        </div> -->
+            <div class="filterreset" (click)="reset()">
+                <button type="button" class="btn btn-danger">reset All</button>
+
+            </div>
+        </div>
+    </form>
+
+</div>

@@ -8,7 +8,6 @@ import { NotificationService } from './notification.service';
 import { MatSnackBarModule, MatSortModule, MatPaginatorModule, MatTableModule } from '@angular/material';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import{NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { TemplateComponent } from './template/template.component'
 const material = [
   MatTableModule,
   MatPaginatorModule,

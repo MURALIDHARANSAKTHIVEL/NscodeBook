@@ -24,9 +24,9 @@ export class QuestionService {
     return this.http.post(this.baseUrl + "questions", questionForm);
   }
 
-  public getQuestion(): Observable<any> {
+  public getQuestion(filterForm?: any): Observable<any> {
 
-    return this.http.get(this.baseUrl + "questions");
+    return this.http.get(this.baseUrl + "questions", { params: filterForm });
   }
   public getQuestionById(questionId: number): Observable<any> {
 
@@ -37,6 +37,7 @@ export class QuestionService {
 
     return this.http.put(this.baseUrl + "questions/" + questionId, changeData);
   }
+
 }
 
 

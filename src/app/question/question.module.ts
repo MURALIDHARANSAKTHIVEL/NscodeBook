@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule, MatSnackBarModule } from '@angular/material';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
 
 const material = [
   MatTableModule,
@@ -27,6 +28,7 @@ const material = [
     TooltipModule.forRoot(),
     HttpClientModule,
     material,
+    SharedmoduleModule,
     AngularSvgIconModule.forRoot()
 
 

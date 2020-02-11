@@ -15,6 +15,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { TemplateComponent } from '../template/template.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
 
 
 
@@ -47,7 +48,8 @@ const ngxBootstrap = [
     FormsModule,
     ReactiveFormsModule,
     AngularSvgIconModule.forRoot(),
-    ngxBootstrap
+    ngxBootstrap,
+    SharedmoduleModule
 
 
 

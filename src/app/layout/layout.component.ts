@@ -19,5 +19,6 @@ export class LayoutComponent implements OnInit {
   {
    
 this.showslide=event;
+console.log(event);
   }
 }

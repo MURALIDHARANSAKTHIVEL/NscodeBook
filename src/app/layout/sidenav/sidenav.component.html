@@ -5,7 +5,7 @@
             <img class="img-circle" src="assets\Defaultuser.png" style="border-radius: 50%;width:65px; height: 65px;" />
         </div>
         <div id="user-details">
-            <app-userinfolist></app-userinfolist>
+            <!-- <app-userinfolist></app-userinfolist> -->
             <p> Admin </p>
 
 
@@ -23,43 +23,43 @@
                     <span>Home</span>
                 </a>
             </li>
-            <li class="nav-item" routerLink="test">
+            <li class="nav-item" routerLink="test" [routerLinkActive]="['is-active']">
                 <a>
                     <i class="fa fa-flag" aria-hidden="true"></i><br>
                     <span>Test</span>
                 </a>
             </li>
-            <li class="nav-item" routerLink="question-details" tabindex="40">
+            <li class="nav-item" routerLink="question-details" [routerLinkActive]="['is-active']" tabindex="40">
                 <a>
                     <i class="fa fa-question" aria-hidden="true"></i><br>
                     <span>Question</span>
                 </a>
             </li>
-            <li class="nav-item" routerLink="user-details">
+            <li class="nav-item" routerLink="user-details" [routerLinkActive]="['is-active']">
                 <a>
                     <i class="fa fa-user-secret" aria-hidden="true"></i><br>
                     <span>User</span>
                 </a>
             </li>
-            <li class="nav-item" routerLink="role">
+            <li class="nav-item" routerLink="role" [routerLinkActive]="['is-active']">
                 <a>
                     <i class="fa fa-user" aria-hidden="true"></i><br>
                     <span>Role</span>
                 </a>
             </li>
-            <li class="nav-item"  routerLink="category" tabindex="10">
+            <li class="nav-item"  routerLink="category" [routerLinkActive]="['is-active']" tabindex="10">
                 <a>
                     <i class="fa fa-list" aria-hidden="true"></i><br>
                     <span>Category</span>
                 </a>
             </li>
-            <li class="nav-item" routerLink="template">
+            <li class="nav-item" routerLink="template" [routerLinkActive]="['is-active']">
                 <a>
                     <i class="fa fa-eye" aria-hidden="true"></i><br>
                     <span>Template</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" >
                 <a>
                     <i class="fa fa-cogs" aria-hidden="true"></i><br>
                     <span>Settings</span>

@@ -24,14 +24,29 @@
                         Name</label><em>* </em>
                     <input type="text" class="form-control input-lg" id="FirstName" placeholder="FirstName"
                         formControlName="firstName">
+                    <div
+                        *ngIf="userForm.controls['firstName'].invalid && (userForm.controls['firstName'].touched || userForm.controls['firstName'].dirty )">
+                        <em *ngIf="userForm.controls['firstName'].errors?.required">FirstName is required!!!</em>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="UserName"
                         [class.invalidField]="userForm.controls['userName'].invalid && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty ) ">User
-                        Name</label><em>* &nbsp; {{userNameExists?.message}}</em>
-                    <input type="text" class="form-control input-lg" id="UserName" placeholder="UserName"
-                        formControlName="userName" (focusout)="userNameExist($event)">
+                        Name</label><b>* &nbsp; {{userNameExists.message}}</b>
+                    <div class="username-group">
+                        <input type="text" class="form-control input-lg username" id="UserName" placeholder="UserName"
+                            formControlName="userName">
+                        <div class="check-btn" [hidden]="userNameExists?.show"><button
+                                class="check-available btn btn-primary btn-sm" (click)="userNameExistCheck()"
+                                [disabled]="userNameExists.checkavailability"
+                                [class.button-disable]="userNameExists.checkavailability">check
+                                availablity</button></div>
+                    </div>
+                    <div
+                        *ngIf="userForm.controls['userName'].invalid && (userForm.controls['userName'].touched || userForm.controls['userName'].dirty )">
+                        <em *ngIf="userForm.controls['userName'].errors?.required">UserName is required!!!</em>
+                    </div>
                 </div>
 
 
@@ -39,8 +54,13 @@
 
                     <label for="E-mail"
                         [class.invalidField]="userForm.controls['email'].invalid && (userForm.controls['email'].touched || userForm.controls['email'].dirty ) ">E-mail</label><em>*</em>
-                    <input  type="email" class="form-control input-lg"
-                        id="E-mail" placeholder="E-mail" formControlName="email" email=true>
+                    <input type="email" class="form-control input-lg" id="E-mail" placeholder="E-mail"
+                        formControlName="email" email=true>
+                    <div
+                        *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].touched || userForm.controls['email'].dirty )">
+                        <em *ngIf="userForm.controls['email'].errors?.required">Email is required!!!</em>
+                        <em *ngIf="userForm.controls['email'].errors.email">Invalid email format!!!</em>
+                    </div>
                 </div>
 
 
@@ -53,7 +73,10 @@
                             {{gender.genderType}}
                         </option>
                     </select>
-
+                    <div
+                        *ngIf="userForm.controls['genderTypeKey'].invalid && (userForm.controls['genderTypeKey'].touched || userForm.controls['genderTypeKey'].dirty )">
+                        <em *ngIf="userForm.controls['genderTypeKey'].errors?.required">Gender is required!!!</em>
+                    </div>
                 </div>
 
             </div>
@@ -64,6 +87,11 @@
                         Name</label><em>*</em>
                     <input type="text" class="form-control input-lg" id="LastName" placeholder="LastName"
                         formControlName="lastName">
+
+                    <div
+                        *ngIf="userForm.controls['lastName'].invalid && (userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty )">
+                        <em *ngIf="userForm.controls['lastName'].errors?.required">LastName is required!!!</em>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="PhoneNumber"
@@ -71,6 +99,13 @@
                         Number</label><em>*</em>
                     <input type="text" class="form-control input-lg" id="PhoneNumber" placeholder="PhoneNumber"
                         formControlName="phoneNumber">
+
+                    <div
+                        *ngIf="userForm.controls['phoneNumber'].invalid && (userForm.controls['phoneNumber'].touched || userForm.controls['phoneNumber'].dirty )">
+                        <em *ngIf="userForm.controls['phoneNumber'].errors?.required">PhoneNumber is required!!!</em>
+                        <em *ngIf="userForm.controls['phoneNumber'].errors.pattern">should be 10 digit and valid
+                            number!!!</em>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -82,7 +117,10 @@
                             {{role.roleName}}
                         </option>
                     </select>
-
+                    <div
+                        *ngIf="userForm.controls['roleKey'].invalid && (userForm.controls['roleKey'].touched || userForm.controls['roleKey'].dirty )">
+                        <em *ngIf="userForm.controls['roleKey'].errors?.required">Role is required!!!</em>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -101,8 +139,9 @@
         <div class="row  justify-content-center">
             <div class="col-8">
                 <div class="buttongroup d-flex justify-content-center">
-                    <button class="btn btn-primary" [class.button-disable]="userForm.invalid || userNameExists?.isExist"
-                        [disabled]="userForm.invalid || userNameExists?.isExist" (click)="onSubmitUserForm()">submit</button>&nbsp;&nbsp;
+                    <button class="btn btn-primary" [class.button-disable]="userForm.invalid || userNameExists.isExist "
+                        [disabled]="userForm.invalid || userNameExists.isExist  "
+                        (click)="onSubmitUserForm()">submit</button>&nbsp;&nbsp;
                     <button class="btn btn-success reset" type="submit" (click)="reset()" tooltip="Full Form Reset">
                         Reset
                     </button>

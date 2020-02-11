@@ -26,7 +26,7 @@
                 <select class="form-control" formControlName="categoryKey" size="1">
                     <option value=""> --Select one Category--</option>
                     <option *ngFor="let category of categories" value="{{category.categoryKey}}">
-                        {{category.description}}
+                        {{category.categoryName}}
                     </option>
                 </select>
                 <!-- <div *ngIf="questionForm.controls.CategoryKey?.invalid && (questionForm.controls.categoryKey.dirty || questionForm.controls.categoryKey.touched)"

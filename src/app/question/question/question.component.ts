@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormControl, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { ICategory, ITemplate } from '../categoryInterface';
 import { QuestionService } from '../question.service';
@@ -133,6 +133,7 @@ export class QuestionComponent implements OnInit {
   getCategories() {
     this.questionservice.getCategories().subscribe(data => {
       this.categories = data;
+      // this.categories
     });
 
   }
