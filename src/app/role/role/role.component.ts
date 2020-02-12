@@ -24,6 +24,7 @@ export class RoleComponent implements OnInit {
     this.getRoles();
     this.getAllPermissions();
   }
+  spinnerLoader: boolean = true;
   roleDataSourceColumn: string[] = ["No", "RoleName", "Edit", "Status"];
   roleDataSource = new MatTableDataSource();
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -41,9 +42,10 @@ export class RoleComponent implements OnInit {
 
   });
 
-  getRoles(filterForm?: object) {
-
+  getRoles(filterForm?: object): void {
+    this.spinnerLoader = false;
     this.roleService.getRoles(filterForm || '').subscribe(data => {
+      this.spinnerLoader = true;
       if (data == null) {
         this.roleDataSource.data = [];
         this.roleDataSource.paginator = this.paginator;
@@ -59,14 +61,14 @@ export class RoleComponent implements OnInit {
     });
   }
 
-  createRole() {
+  createRole(): void {
     this.roleForm.reset({ isActive: true, permissionType: this.globalPermissions });
     this.roleTemplateRef = this.modelservice.show(this.roleTemplate, this.roleTemplateConfig);
   }
 
-  get permissions() { return this.roleForm.get('permissionType') as FormArray };
+  get permissions(): FormArray { return this.roleForm.get('permissionType') as FormArray };
 
-  getAllPermissions() {
+  getAllPermissions(): void {
     this.roleService.getPermissions().subscribe(data => {
       this.permissionCount = data.length;
       this.getPermissionFormArray(this.permissionCount);
@@ -76,7 +78,7 @@ export class RoleComponent implements OnInit {
 
   }
 
-  getPermissionFormArray(permissionCount: number) {
+  getPermissionFormArray(permissionCount: number): void {
     for (let i = 0; i < permissionCount; i++) {
       this.permissions.push(this.formbuilder.group({
         permissionTypeKey: [],
@@ -88,7 +90,7 @@ export class RoleComponent implements OnInit {
 
   }
 
-  getPermissionByRoleId(roleKey: number) {
+  getPermissionByRoleId(roleKey: number): void {
     if (roleKey != null) {
       this.roleService.getPermissionsByRole(roleKey).subscribe(data => {
         this.roleForm.get('permissionType').patchValue(data);
@@ -97,22 +99,23 @@ export class RoleComponent implements OnInit {
 
 
   }
-  getRoleById(roleKey: number) {
+  getRoleById(roleKey: number): void {
     if (roleKey != null) {
-    this.roleService.getRoleById(roleKey).subscribe(data => {
-      this.roleForm.patchValue(data);
-    });
-  }
+      this.roleService.getRoleById(roleKey).subscribe(data => {
+        this.roleForm.patchValue(data);
+
+      });
+    }
   }
 
-  EditRole(roleKey: number) {
+  EditRole(roleKey: number): void {
     this.createRole();
     this.getPermissionByRoleId(roleKey);
     this.getRoleById(roleKey);
   }
 
 
-  saveRole(roleKey: number) {
+  saveRole(roleKey: number): void {
     if (roleKey == null) {
       this.roleForm.value.roleKey = 0;
       this.roleService.createRoles(this.roleForm.value).subscribe(data => {
@@ -129,12 +132,12 @@ export class RoleComponent implements OnInit {
       });
     }
   }
-  closeModel() {
+  closeModel(): void {
     this.getRoles();
     this.roleTemplateRef.hide();
   }
 
-  statusChange(roleForm: any, roleKey: number) {
+  statusChange(roleForm: any, roleKey: number): void {
     roleForm.PermissionType = [];
     this.roleService.updateRoles(roleKey, roleForm).subscribe(data => {
       this.notifyservice.statusFlag = true;

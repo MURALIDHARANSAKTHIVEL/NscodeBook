@@ -11,6 +11,7 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./user-details.component.less']
 })
 export class UserDetailsComponent implements OnInit {
+  spinnerLoader: boolean = true;
   userDataSourceColumn: string[] = ["No", "UserName", "Email", "Role", "Edit", "Status"];
   filterKeyObject = [{ filterkey: 1, filterName: 'UserName' }, { filterkey: 2, filterName: 'Role' }, { filterkey: 3, filterName: 'Email' }]
   userDataSource = new MatTableDataSource();
@@ -22,11 +23,12 @@ export class UserDetailsComponent implements OnInit {
     this.getUsers();
   }
 
-  getUsers(filterdata?: Object) {
+  getUsers(filterdata?: Object): void {
 
+    this.spinnerLoader = false;
     this.userservice.getUsers(filterdata || '').subscribe(data => {
+      this.spinnerLoader = true;
       if (data == null) {
-
         this.userDataSource.data = [];
         this.userDataSource.paginator = this.paginator;
       }
@@ -39,7 +41,7 @@ export class UserDetailsComponent implements OnInit {
     })
   }
 
-  statusChange(userFormData: any, userKey: number) {
+  statusChange(userFormData: any, userKey: number): void {
     const formData = new FormData();
     formData.append("UserData", JSON.stringify(userFormData));
     this.userservice.updateUsers(formData, userKey).subscribe(data => {
@@ -48,7 +50,7 @@ export class UserDetailsComponent implements OnInit {
     })
   }
 
-  navigateUserscreen(userKey?: number) {
+  navigateUserscreen(userKey?: number): void {
     this.route.navigate(['dashboard/user/'], { queryParams: { userKey: userKey } });
 
   }

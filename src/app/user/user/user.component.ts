@@ -57,7 +57,7 @@ export class UserComponent implements OnInit {
 
 
 
-  onImageChange(event) {
+  onImageChange(event):void {
     if (event.target.files && event.target.files[0]) {
 
       this.fileImageData = event.target.files[0];
@@ -71,19 +71,19 @@ export class UserComponent implements OnInit {
     }
   }
 
-  getRoles() {
+  getRoles():void {
     this.userservice.getRoles().subscribe(data => {
       this.rolesList = data;
     });
   }
 
-  getGenders() {
+  getGenders():void {
     this.userservice.getGenders().subscribe(data => {
       this.genderList = data;
     })
   }
 
-  onSubmitUserForm() {
+  onSubmitUserForm():void {
     var userFormData = new FormData();
     userFormData.append("UserData", JSON.stringify(this.userForm.getRawValue()));
     userFormData.append('ImageFile', this.fileImageData);
@@ -108,7 +108,7 @@ export class UserComponent implements OnInit {
     }
 
   }
-  userNameExistCheck() {
+  userNameExistCheck():void {
     this.userservice.getUsersByUserName(this.userForm.value.userName).subscribe(data => {
       if (data.isExist == true) {
         this.userNameExists['message'] = "That userName is Taken. Try another";
@@ -124,7 +124,7 @@ export class UserComponent implements OnInit {
 
   }
 
-  userEditInformation() {
+  userEditInformation():void {
     this.router.queryParams.subscribe(data => {
       let userKey = data.userKey || 0;
       this.userKeyFlag = userKey;
@@ -142,7 +142,7 @@ export class UserComponent implements OnInit {
     })
   }
 
-  reset() {
+  reset():void {
     if (this.userForm.get('userKey').value == null) {
       this.userForm.reset({ isActive: true, genderTypeKey: '', roleKey: '' });
       this.userNameExists['checkavailability'] = true;
@@ -152,7 +152,7 @@ export class UserComponent implements OnInit {
     }
   }
 
-  defaultpage() {
+  defaultpage():void {
     this.route.navigate(['dashboard/user-details']);
   }
 }

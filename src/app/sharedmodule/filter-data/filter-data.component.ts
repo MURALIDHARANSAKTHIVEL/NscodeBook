@@ -24,21 +24,28 @@ export class FilterDataComponent implements OnInit {
     searchKey: ['', [Validators.required]]
   })
 
-  // filterKeyChange(event) {
-  //   this.secondarykeysearch.emit(this.filterForm);
-  //   this.filterForm.reset({ filterKey: this.filterForm.get('filterKey').value, searchKey: '', statusKey: this.filterForm.get('statusKey').value });
-  // }
+  filterData(): void {
 
-  filterData() {
+    let filterkey = this.filterForm.get('filterKey').valid;
+    let searchKey = this.filterForm.get('statusKey').valid
+    let statusKey = this.filterForm.get('searchKey').valid
+    if ((filterkey || searchKey || statusKey)) {
 
-    if ((this.filterForm.get('filterKey').valid || this.filterForm.get('statusKey').valid || this.filterForm.get('searchKey').valid)) {
       this.filterKeysearch.emit(this.filterForm.value);
     }
 
+
   }
-  reset() {
+
+  filterInputKeyPress(event: any): void {
+    if (event.keyCode == 13) {
+      this.filterData();
+    }
+  }
+
+  reset(): void {
     this.filterKeysearch.emit();
     this.filterForm.reset({ filterKey: '', searchKey: '', statusKey: '' });
-    // this.secondaryfilterObject = [];
+
   }
 }

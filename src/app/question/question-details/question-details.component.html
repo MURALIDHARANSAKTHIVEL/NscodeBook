@@ -1,4 +1,6 @@
 <div class="container-fluid pagewrapper">
+
+    
     <div class="row">
         <div class="col-12">
             <!-- <button type="button" class="btn btn-primary" (click)="navigateQuestionScreen()"><i class="fa fa-plus"
@@ -17,6 +19,7 @@
 
     <div class="row">
         <div class="col-12">
+            <app-progress-spinner [spinnerLoader]="spinnerLoader"></app-progress-spinner>
             <!-- <div class="card">
                 <div class="card-body"> -->
             <!-- <table mat-table [dataSource]="questionsDataSource" matSort class="table table-striped"> -->
@@ -73,11 +76,8 @@
                 <tr mat-row *matRowDef="let row; columns: questionsDataSourceColumn;">
                 </tr>
             </table>
-
             <app-table-data-not-found [TableDataNotFound]="questionsDataSource.data.length?true:false">
             </app-table-data-not-found>
-
-
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
             <!-- </div>
             </div> -->

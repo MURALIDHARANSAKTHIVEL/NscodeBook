@@ -12,12 +12,23 @@
   
 }
 
-.header-title.show{
-
-    width: 0px;
-    overflow: hidden;
+.header-sub-title
+{
+    display: none;
+    transform: all 0.1s;
 }
 
+.header-title.show{
+
+     width: 0px;
+     overflow: hidden;
+}
+
+.header-title.show~.header-sub-title
+{
+    display:block;
+    width: 100px;
+}
 .header-title.show~.nav
 {
     transition: all 0.1s;

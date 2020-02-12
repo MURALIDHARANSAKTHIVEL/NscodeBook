@@ -8,14 +8,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { QuestionDetailsComponent } from './question-details/question-details.component';
-import { MatTableModule, MatPaginatorModule, MatSortModule, MatSnackBarModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule, MatProgressSpinnerModule } from '@angular/material';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { SharedmoduleModule } from '../sharedmodule/sharedmodule.module';
 
 const material = [
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatProgressSpinnerModule
 ]
 @NgModule({
   declarations: [QuestionComponent, QuestionDetailsComponent],
@@ -23,7 +24,6 @@ const material = [
     CommonModule,
     QuestionRoutingModule,
     QuillModule.forRoot(),
-    FormsModule,
     ReactiveFormsModule,
     TooltipModule.forRoot(),
     HttpClientModule,

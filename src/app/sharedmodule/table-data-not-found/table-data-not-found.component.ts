@@ -8,10 +8,11 @@ import { Component, OnInit, Input, SimpleChange } from '@angular/core';
 export class TableDataNotFoundComponent implements OnInit {
 
 
-  @Input('TableDataNotFound') tableDataNotFound: boolean=true;
+  @Input('TableDataNotFound') tableDataNotFound: boolean;
   constructor() { }
 
   ngOnInit() {
+    console.log(this.tableDataNotFound);
   }
 
 }

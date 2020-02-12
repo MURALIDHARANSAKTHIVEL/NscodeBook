@@ -12,8 +12,8 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   styleUrls: ['./category.component.less']
 })
 export class CategoryComponent implements OnInit {
-  dataNotFound: boolean;
 
+  spinnerLoader: boolean = true;
   constructor(private modelservice: BsModalService, private formbulider: FormBuilder,
     private categoryservice: CategoryService, private notification: NotificationService) { }
   @ViewChild('categorytemplate', { static: true }) categorytemplate;
@@ -42,13 +42,13 @@ export class CategoryComponent implements OnInit {
 
   })
 
-  openModel(template: TemplateRef<any>) {
+  openModel(template: TemplateRef<any>): void {
     this.errorMessage = "";
     this.categoryForm.reset({ categoryKey: 0, isActive: true });
     this.categoryModelRef = this.modelservice.show(template, this.categoryTemplateConfig);
   }
 
-  saveCategory() {
+  saveCategory(): void {
 
     let notificationMessage;
     if (this.editCategoryFlag == true) {
@@ -81,8 +81,10 @@ export class CategoryComponent implements OnInit {
 
 
 
-  getCategory(filterData?: object) {
+  getCategory(filterData?: object): void {
+    this.spinnerLoader = false;
     this.categoryservice.getCategory(filterData || '').subscribe(data => {
+      this.spinnerLoader = true;
       if (data == null) {
         this.categoryDataSource.data = [];
         this.categoryDataSource.paginator = this.paginator;
@@ -96,7 +98,7 @@ export class CategoryComponent implements OnInit {
     })
   }
 
-  editCategory(categoryKey: number) {
+  editCategory(categoryKey: number): void {
     this.editCategoryKey = categoryKey;
     this.categoryservice.getCategoryById(categoryKey).subscribe(data => {
       this.categoryModelRef = this.modelservice.show(this.categorytemplate);
@@ -106,7 +108,7 @@ export class CategoryComponent implements OnInit {
 
   }
 
-  statusChange(categoryData: any, categoryKey: number) {
+  statusChange(categoryData: any, categoryKey: number): void {
     let notificationMessage;
     this.categoryservice.updateCategory(categoryKey, categoryData).subscribe(data => {
       this.notification.statusFlag = true;

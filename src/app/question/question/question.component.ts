@@ -4,7 +4,6 @@ import { ICategory, ITemplate } from '../categoryInterface';
 import { QuestionService } from '../question.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from 'src/app/notification.service';
-
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
@@ -62,9 +61,9 @@ export class QuestionComponent implements OnInit {
     this.editQuestionInformation();
   }
 
-  get options() { return this.questionForm.get('options') as FormArray };
+  get options():FormArray { return this.questionForm.get('options') as FormArray };
 
-  getOptionTemplate() {
+  getOptionTemplate():void {
     for (let i = 0; i < 4; i++) {
       this.options.push(this.formBuilder.group({
         optionKey: [0],
@@ -76,7 +75,7 @@ export class QuestionComponent implements OnInit {
   }
 
 
-  clickOption(formGroup: FormGroup) {
+  clickOption(formGroup: FormGroup):void {
     let TemplateType = this.questionForm.get('templateTypeKey').value;
     if (TemplateType == '1') {
       this.options.controls.filter(x => x == formGroup ? x.value.isAnswer = true : x.value.isAnswer = false);
@@ -87,7 +86,7 @@ export class QuestionComponent implements OnInit {
 
   }
 
-  questionFormSubmited() {
+  questionFormSubmited():void{
     let isAnswer = this.options.controls.filter(x => x.value.isAnswer == true);
     if (isAnswer.length != 0) {
       if (this.questionEditFlag) {
@@ -112,11 +111,12 @@ export class QuestionComponent implements OnInit {
 
   }
 
-  editQuestionInformation() {
+  editQuestionInformation():void {
     this.router.queryParams.subscribe(data => {
       let questionKey = data.questionKey || 0;
       this.questionKeyChange = questionKey;
       if (questionKey != 0) {
+  
         this.questionEditFlag = true;
         this.questionservice.getQuestionById(data.questionKey).subscribe(data => {
           this.questionForm.patchValue(data);
@@ -130,20 +130,19 @@ export class QuestionComponent implements OnInit {
   }
 
 
-  getCategories() {
+  getCategories():void {
     this.questionservice.getCategories().subscribe(data => {
       this.categories = data;
-      // this.categories
     });
 
   }
 
-  getTemplate() {
+  getTemplate():void {
     this.questionservice.getTemplate().subscribe(data => {
       this.templates = data;
     })
   }
-  getTemplateType() {
+  getTemplateType():void {
     this.questionForm.controls.templateTypeKey.valueChanges.subscribe(templateKey => {
       this.optionsTemplateValue = templateKey;
       this.options.controls.filter(x => x.value.isAnswer ? x.value.isAnswer = false : x.value.isAnswer);
@@ -151,11 +150,11 @@ export class QuestionComponent implements OnInit {
     });
   }
 
-  reset() {
+  reset():void {
     this.questionForm.reset({ templateTypeKey: '', categoryKey: '' });
   }
 
-  defaultpage() {
+  defaultpage():void {
     this.route.navigate(['dashboard/question-details']);
 
   }

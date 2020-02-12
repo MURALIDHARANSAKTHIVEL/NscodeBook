@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   @Output() togglesildebar = new EventEmitter<boolean>();
   ngOnInit() {
   }
-  activetoggle() {
+  activetoggle():void {
     this.show = !this.show;
     this.togglesildebar.emit(this.show);
   }

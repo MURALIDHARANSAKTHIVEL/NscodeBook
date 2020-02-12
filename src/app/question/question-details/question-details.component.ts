@@ -14,10 +14,10 @@ export class QuestionDetailsComponent implements OnInit {
 
   questionsDataSourceColumn: string[] = ["No", "Description", "templateType", "categoryName", "Edit", "isActive"];
   questionsDataSource = new MatTableDataSource();
-  filterKeyObject: Object = [{ filterkey: 1, filterName: 'Template' }, { filterkey: 2, filterName: 'Category' }]
+  filterKeyObject: Object = [{ filterkey: 1, filterName: 'Template' }, { filterkey: 2, filterName: 'Category' }];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  spinnerLoader: boolean = true;
   constructor(private router: Router,
     private questionservice: QuestionService,
     private notify: NotificationService) { }
@@ -26,10 +26,11 @@ export class QuestionDetailsComponent implements OnInit {
     this.getQuestions();
   }
 
- 
-  getQuestions(FilterForm?: object): void {
-    this.questionservice.getQuestion(FilterForm || '').subscribe(data => {
 
+  getQuestions(FilterForm?: object): void {
+    this.spinnerLoader = false;
+    this.questionservice.getQuestion(FilterForm || '').subscribe(data => {
+      this.spinnerLoader = true;
       if (data.length == 0) {
         this.questionsDataSource.data = [];
         this.questionsDataSource.paginator = this.paginator;
@@ -42,13 +43,13 @@ export class QuestionDetailsComponent implements OnInit {
     });
   }
 
-  navigateQuestionScreen(questionKey?: number) {
+  navigateQuestionScreen(questionKey?: number): void {
 
     this.router.navigate(['dashboard/question/'], { queryParams: { questionKey: questionKey } });
   }
 
 
-  statusOnChange(questionKey: number, changeData: any) {
+  statusOnChange(questionKey: number, changeData: any): void {
     changeData.options = [];
 
     this.questionservice.updateQuestion(questionKey, changeData).subscribe(data => {

@@ -30,12 +30,11 @@ const ngxBootstrap = [
   imports: [
     CommonModule,
     RoleRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
     AngularSvgIconModule.forRoot(),
     material,
-   ngxBootstrap,
-   SharedmoduleModule
+    ngxBootstrap,
+    SharedmoduleModule
   ]
 })
 export class RoleModule { }
